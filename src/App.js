@@ -1,13 +1,13 @@
 import "./assets/css/index.scss";
+import React from "react";
+import Main from "./components/main";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>김성미</div>
-      </header>
+    <div className="app">
+      <Main />
     </div>
   );
-}
+};
 
 export default App;
