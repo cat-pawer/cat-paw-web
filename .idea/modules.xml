@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/cat-paw-web.iml" filepath="$PROJECT_DIR$/cat-paw-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/../front-pawer.iml" filepath="$PROJECT_DIR$/../front-pawer.iml" />
     </modules>
   </component>
