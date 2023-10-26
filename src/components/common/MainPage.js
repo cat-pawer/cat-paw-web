@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "../app/testSlice";
+import { decrement, increment } from "../../app/testSlice";
 
-const Main = () => {
+const MainPage = () => {
 	const count = useSelector((state) => state.counter.value);
 	const dispatch = useDispatch();
 
@@ -17,4 +17,4 @@ const Main = () => {
 	);
 };
 
-export default Main;
+export default MainPage;
