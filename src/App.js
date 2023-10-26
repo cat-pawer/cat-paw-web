@@ -1,13 +1,13 @@
 import "./assets/css/index.scss";
 import React from "react";
-import Main from "./components/main";
+import MainPage from "./components/common/MainPage";
 
 const App = () => {
-	return (
-		<div className="app">
-			<Main />
-		</div>
-	);
+  return (
+    <div className="app">
+      <MainPage />
+    </div>
+  );
 };
 
 export default App;
