@@ -2,7 +2,11 @@
 	"name": "front-pawer",
 	"version": "0.1.0",
 	"private": true,
+	"engines": {
+		"npm": "10.2.1"
+	},
 	"dependencies": {
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@reduxjs/toolkit": "^1.9.7",
 		"@testing-library/jest-dom": "^5.17.0",
 		"@testing-library/react": "^13.4.0",
@@ -38,7 +42,6 @@
 	},
 	"devDependencies": {
 		"@babel/eslint-parser": "^7.22.15",
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"eslint": "^8.52.0",
 		"eslint-config-airbnb": "19.0.4",
 		"eslint-config-prettier": "^9.0.0",
