@@ -21,7 +21,6 @@ const router = createBrowserRouter([
     element: <CalendarPage />,
   }
 ]);
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   //감 쌈으로써 store사용가능하게됨,prop으로전달할 수 있도록
