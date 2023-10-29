@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment } from "../../app/testSlice";
 import Select from "react-select";
@@ -11,6 +12,7 @@ const options = [
 
 const MainPage = () => {
 	const count = useSelector((state) => state.counter.value);
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [selectedOption, handleSelectChange] = useState();
 	return (
@@ -27,6 +29,10 @@ const MainPage = () => {
 				<span>{count}</span>
 				<button onClick={() => dispatch(increment())}>1씩 증가</button>
 			</div>
+			<div onClick={() => navigate("/myprofile")}>
+				my profile page
+			</div>
+
 		</div>
 	);
 };

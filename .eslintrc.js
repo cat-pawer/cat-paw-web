@@ -9,6 +9,11 @@ module.exports = {
 		"plugin:jsx-a11y/recommended",
 		"plugin:prettier/recommended",
 		"plugin:react-hooks/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended",
+		"react-app",
+		"react-app/jest",
+		"prettier"
 	],
 	overrides: [
 		{
@@ -28,8 +33,17 @@ module.exports = {
 		ecmaVersion: "latest",
 		sourceType: "module",
 	},
-	plugins: ["react", "@typescript-eslint"],
-	rules: {},
+	plugins: ["react", "@typescript-eslint",'react-hooks', 'jsx-a11y'],
+	rules: {
+		"prettier/prettier": [
+			"error",
+			{
+				useTabs: false,
+				endOfLine: 'auto',
+			}
+		],
+		'react/react-in-jsx-scope': 'off',
+	},
 	settings: {
 		"react": {
 			"version": "detect"

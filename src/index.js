@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import MainPage from "./components/common/MainPage";
-import CalendarPage from "./components/common/Calendar";
 import store from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
+import App from "./App";
+import MainPage from "./components/common/MainPage";
+import CalendarPage from "./components/common/Calendar";
+import MyProfilePage from "./components/user/MyProfilePage";
 
 const router = createBrowserRouter([
 	{
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
 		path: "/calendar",
 		element: <CalendarPage />,
 	},
+	{
+		path: "/myprofile",
+		element: <MyProfilePage />,
+	}
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
