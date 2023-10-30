@@ -16,10 +16,10 @@ const MainPage = () => {
     const dispatch = useDispatch();
     const [selectedOption, handleSelectChange] = useState();
     return (
-        <div>
+        <div className="main-section">
             <div>
                 <Select
-                    value={selectedOption}
+                    value={ selectedOption }
                     onChange={handleSelectChange}
                     options={options}
                 />
@@ -29,7 +29,7 @@ const MainPage = () => {
                 <span>{count}</span>
                 <button onClick={() => dispatch(increment())}>1씩 증가</button>
             </div>
-            <div onClick={() => navigate("/myprofile")}>my profile page</div>
+            <div className="main-section-profile" onClick={() => navigate("/myprofile")}>my profile page</div>
         </div>
     );
 };
