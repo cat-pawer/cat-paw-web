@@ -7,7 +7,6 @@ const App = () => {
     return (
         <div className="app">
             <MainPage />
-            <CalendarPage />
         </div>
     );
 };

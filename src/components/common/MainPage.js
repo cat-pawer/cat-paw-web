@@ -1,35 +1,48 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "../../app/testSlice";
-import Select from "react-select";
-
-const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-];
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 
 const MainPage = () => {
-    const count = useSelector((state) => state.counter.value);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [selectedOption, handleSelectChange] = useState();
+    const mainCategoryList = [
+        {PLAN: "기획"},
+        {DESIGN: "디자이너"},
+        {BACK: "백엔드"},
+        {FRONT: "프론트엔드"},
+        {ALL: "전체"},
+    ];
+    const [categoryFocus, setCategoryFocus] = useState("ALL")
+    const [mainCategory, setMainCategory] = useState("")
+
     return (
         <div className="main-section">
-            <div>
-                <Select
-                    value={ selectedOption }
-                    onChange={handleSelectChange}
-                    options={options}
-                />
+            <div className="main-section-title">
+                <div className="main-section-title-star">
+                    <span>★</span>
+                </div>
+                <div className="main-section-title-talk">
+                    <span>프로젝트를</span><br/>
+                    <span>만나볼 준비 되었나요?</span><br/>
+                    <div className="main-section-title-talk-banner">원하는 프로젝트는 다 만날 수 있어요!</div>
+                </div>
+                <div className="main-section-title-search">
+                    <FontAwesomeIcon icon={faMagnifyingGlass}/>
+                    <input type="text" placeholder=""/>
+                </div>
             </div>
-            <div>
-                <button onClick={() => dispatch(decrement())}>1씩 감소</button>
-                <span>{count}</span>
-                <button onClick={() => dispatch(increment())}>1씩 증가</button>
+            <div className="main-section-categoryList">
+                {mainCategoryList.map((category, index) => (
+                    <div className={categoryFocus === Object.keys(category)[0] ? 'focus' : 'category'} key={index} onClick={() => {
+                        setMainCategory(Object.keys(category)[0]);
+                        setCategoryFocus(Object.keys(category)[0]);
+                    }}>
+                        <span>{Object.values(category)}</span>
+                    </div>
+                ))}
             </div>
-            <div className="main-section-profile" onClick={() => navigate("/myprofile")}>my profile page</div>
         </div>
     );
 };
