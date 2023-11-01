@@ -1,14 +1,14 @@
 import "./assets/css/index.scss";
 import React from "react";
+// @ts-ignore
 import MainPage from "./components/common/MainPage";
-import CalendarPage from "./components/common/Calendar";
 
-const App = () => {
+function App() {
     return (
         <div className="app">
             <MainPage />
         </div>
     );
-};
+}
 
 export default App;
