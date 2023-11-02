@@ -1,13 +1,9 @@
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import sampleImage from '../../public/images/sample.png';
 
-const MainPage = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+function MainPage() {
     const mainCategoryList = [
         {PLAN: "기획"},
         {DESIGN: "디자이너"},
@@ -48,10 +44,10 @@ const MainPage = () => {
                 </div>
             </div>
             <div className="main-image">
-                <img alt="sample image" src={sampleImage} />
+                <img alt="sample image" src={sampleImage}/>
             </div>
         </div>
     );
-};
+}
 
 export default MainPage;

@@ -26,7 +26,18 @@ module.exports = {
         sourceType: "module",
     },
     plugins: ["react"],
-    rules: {},
+    rules: {
+        'react/jsx-uses-react': 'off',
+        'react/jsx-uses-vars': 'off',
+        'no-unused-vars': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+        'prettier/prettier': [
+            'error',
+            {
+                endOfLine: 'auto',
+            },
+        ],
+    },
     settings: {
         react: {
             version: "detect",

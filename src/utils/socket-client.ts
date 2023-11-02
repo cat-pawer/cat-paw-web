@@ -1,6 +1,6 @@
 // import SockJS from "sockjs-client";
 import StompJs, { Client, IPublishParams } from "@stomp/stompjs";
-import { CONSTANTS } from "../constants";
+import { CONSTANTS } from "@/constants";
 import { CustomMessage } from "./type";
 
 export function createSocketFactory() {
