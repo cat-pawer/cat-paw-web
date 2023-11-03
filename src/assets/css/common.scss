@@ -2,12 +2,15 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   &-section {
-    margin: 60px;
+    margin: 80px 70px 0 0;
 
     &-title {
       &-star {
-
+        > img {
+          width: 76px;
+        }
       }
 
       &-talk {
@@ -45,7 +48,7 @@
           width: 40px;
           height: 40px;
           position: absolute;
-          left: 25px;
+          right: 20px;
           top: 13px;
           color: #569FE1;
         }
@@ -83,9 +86,11 @@
       }
     }
   }
+
   &-image {
+    margin: 45px 0 0 0;
     > img {
-      width: 40vh;
+      width: 723px;
     }
   }
 }
