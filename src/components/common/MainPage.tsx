@@ -46,11 +46,14 @@ function MainPage() {
                         <div className="main-section-title-talk-banner">원하는 프로젝트는 다 만날 수 있어요!</div>
                     </div>
                     <div className="main-section-title-search">
-                        <div>
-                            <Select value={selectOption} onChange={setSelectChange} options={searchOption}/>
+                        <div className="main-section-title-search-select">
+                            <div>
+                            </div>
+                            {/*<Select className="select" value={selectOption} onChange={setSelectChange}*/}
+                            {/*        options={searchOption}/>*/}
                         </div>
-                        <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                        <input type="text" placeholder=""/>
+                        <FontAwesomeIcon icon={faMagnifyingGlass} className="glass"/>
+                        <input className="search-input" type="text" placeholder=""/>
                     </div>
                 </div>
                 <div className="main-section-categoryList">

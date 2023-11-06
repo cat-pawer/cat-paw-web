@@ -6,7 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Provider} from "react-redux";
 import App from "./App";
 import MainPage from "./components/common/MainPage";
-import NewProjectPage from "./components/project/NewProjectPage";
+import SubProjectPage from "./components/board/SubProjectPage";
 
 
 const router = createBrowserRouter([
@@ -19,8 +19,8 @@ const router = createBrowserRouter([
         element: <MainPage/>,
     },
     {
-        path: "/newProject",
-        element: <NewProjectPage/>,
+        path: "/subProject",
+        element: <SubProjectPage/>,
     }
 ]);
 
