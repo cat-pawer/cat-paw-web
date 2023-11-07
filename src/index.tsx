@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import App from "./App";
 import MainPage from "./components/common/MainPage";
 import SubProjectPage from "./components/board/SubProjectPage";
+import ProjectDetailPage from "./components/board/ProjectDetailPage";
 
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: "/subProject",
         element: <SubProjectPage/>,
+    },
+    {
+        path: "/projectDetail/:index",
+        element: <ProjectDetailPage/>,
     }
 ]);
 

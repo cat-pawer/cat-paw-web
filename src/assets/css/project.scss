@@ -30,17 +30,31 @@
 
         &-project {
           display: flex;
+          justify-content: space-between;
           align-items: center;
-          justify-content: center;
-          width: 72px;
-          height: 18px;
-          border-radius: 60px;
-          background: rgba(37, 131, 218, 0.30);
 
-          span {
-            color: #FFF;
-            font-size: 10px;
-            font-weight: bold;
+          &-division {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 72px;
+            height: 18px;
+            border-radius: 60px;
+            background: rgba(37, 131, 218, 0.30);
+
+            span {
+              color: #FFF;
+              font-size: 10px;
+              font-weight: bold
+            }
+          }
+
+          &-dead {
+            span {
+              font-size: 14px;
+              font-weight: 600;
+              color: #F36969;
+            }
           }
         }
 
@@ -112,6 +126,10 @@
   padding: 0 0 0 60px;
   margin: 70px 0 0 0;
 
+  &-card {
+    margin: 0 15px 15px 0;
+  }
+
   &-list {
     display: flex;
     flex-wrap: wrap;
@@ -122,16 +140,22 @@
       width: 377px;
       height: 313px;
       padding: 20px;
-      margin: 0 15px 15px 0;
       border-radius: 10px;
       border: 1px solid #569FE1;
       background: #FFF;
       box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.10);
+      cursor: pointer;
 
       &-title {
         span {
-          font-weight: 600;
+          display: -webkit-box;
+          -webkit-line-clamp: 4;
+          -webkit-box-orient: vertical;
           font-size: 20px;
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all
         }
       }
 
@@ -150,6 +174,7 @@
       &-bottom {
         position: absolute;
         bottom: 20px;
+        width: 335.4px;
 
         &-line {
           width: 337px;
@@ -159,13 +184,14 @@
 
         &-language {
           display: flex;
-          margin: 30px 0 20px 0;
+          margin: 30px 0 10px 0;
+          overflow: auto;
 
           &-list {
             display: flex;
             align-items: center;
             padding: 7px 10px;
-            margin: 0 5px 0 0;
+            margin: 0 5px 5px 0;
             height: 33px;
             border-radius: 60px;
             border: 1px solid #7CB5E9;
@@ -176,8 +202,8 @@
               font-weight: 400;
             }
 
-            .icon {
-              margin-right: 3px;
+            .project-langIcon {
+              margin-right: 5px;
               color: #7CB5E9;
             }
           }
@@ -205,6 +231,162 @@
 
           }
         }
+      }
+    }
+  }
+}
+
+.detail {
+  &-section {
+    display: grid;
+    justify-content: center;
+    width: 960px;
+    margin: 0 170px;
+  }
+
+  &-section2 {
+    background-color: #F8F8F8;
+  }
+
+  &-info {
+    margin: 130px 0 30px 0;
+
+    &-tag {
+      span {
+        font-size: 18px;
+        color: #c5c5c5;
+      }
+    }
+
+    &-title {
+      margin: 10px 0 30px 0;
+
+      span {
+        font-size: 32px;
+        font-weight: bold;
+      }
+    }
+
+    &-nickname {
+      span {
+        font-size: 20px;
+        font-weight: bold;
+        color: #9C9C9C;
+      }
+    }
+
+    &-set {
+      display: flex;
+      align-items: center;
+      margin: 10px 0 0 0;
+
+      span {
+        font-size: 18px;
+        color: #9C9C9C;
+      }
+
+      &-regi {
+        margin: 0 20px 0 0;
+      }
+    }
+  }
+
+  &-data {
+    margin: 0 0 60px 0;
+    height: 343px;
+    padding: 45px;
+    border-radius: 10px;
+    border: 1px solid #569FE1;
+    background: #FFF;
+
+    &-element {
+      margin: 0 20px 0 0;
+      color: #9C9C9C;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    &-elInfo {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    &-top {
+      display: flex;
+
+      &-element {
+        margin: 0 0 30px 0;
+      }
+
+      &-left {
+        margin: 0 270px 0 0;
+
+      }
+
+      &-right {
+
+      }
+    }
+
+    &-bottom {
+      &-language {
+        display: flex;
+        align-items: center;
+        margin: 10px 0 0 0;
+
+        &-list {
+          display: flex;
+          align-items: center;
+          height: 45px;
+          padding: 7px 15px;
+          border-radius: 60px;
+          border: 1px solid #7CB5E9;
+          background: #FFF;
+          margin-right: 15px;
+
+          .detail-langIcon {
+            margin-right: 5px;
+            color: #7CB5E9;
+          }
+
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  &-intro {
+
+    padding: 60px 170px;
+
+    &-duce {
+      span {
+        font-size: 32px;
+        font-weight: 700;
+      }
+    }
+
+    &-mainContent {
+      width: 740px;
+      margin: 10px 0 20px 0;
+    }
+
+    &-content {
+      width: 740px;
+      margin: 10px 0 50px 0;
+
+      span {
+        font-size: 18px;
+      }
+    }
+
+    &-img {
+      margin-bottom: 50px;
+
+      img {
+        border-radius: 10px;
       }
     }
   }

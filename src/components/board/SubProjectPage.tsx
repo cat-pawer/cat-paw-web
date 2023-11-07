@@ -72,7 +72,7 @@ function SubProjectPage() {
                     {newList.map((info, index) => (
                             <div className="project-list-section" key={index}>
                                 <div className="project-list-section-card">
-                                    <div className="project-list-section-card-project">
+                                    <div className="project-list-section-card-project-division">
                                         <span>{info.division}</span>
                                     </div>
                                     <div className="project-list-section-card-title">
@@ -106,7 +106,13 @@ function SubProjectPage() {
                             <div className="project-list-section" key={index}>
                                 <div className="project-list-section-card">
                                     <div className="project-list-section-card-project">
-                                        <span>{info.division}</span>
+                                        <div className="project-list-section-card-project-division">
+                                            <span>{info.division}</span>
+                                        </div>
+                                        <div className="project-list-section-card-project-dead">
+                                            <span>🚨</span>
+                                            <span>D-3</span>
+                                        </div>
                                     </div>
                                     <div className="project-list-section-card-title">
                                         <span>{info.subTitle}</span>
