@@ -4,15 +4,14 @@ import MainPage from "./components/common/MainPage";
 import SubProjectPage from "./components/board/SubProjectPage";
 import ProjectPage from "./components/board/ProjectPage";
 
-
 function App() {
-    return (
-        <div className="app">
-            <MainPage/>
-            <SubProjectPage/>
-            <ProjectPage/>
-        </div>
-    );
+  return (
+    <div className="app">
+      <MainPage />
+      <SubProjectPage />
+      <ProjectPage />
+    </div>
+  );
 }
 
 export default App;
