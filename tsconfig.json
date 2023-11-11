@@ -1,39 +1,27 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "jsx": "react",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": false, //안쓰는애들 빨간밑줄
-    "noUnusedParameters": false,
-    "noImplicitThis": true,
-    "strictNullChecks": true,
-    "alwaysStrict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
-  },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "typeRoots": [
-    "*.png",
-    "*.jpg",
-    "*.jpeg"
-  ]
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "jsx": "react",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": false, //안쓰는애들 빨간밑줄
+        "noUnusedParameters": false,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "alwaysStrict": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "moduleResolution": "node",
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"],
+    "exclude": ["node_modules"],
+    "typeRoots": ["*.png", "*.jpg", "*.jpeg"]
 }

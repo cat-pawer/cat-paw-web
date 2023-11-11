@@ -1,10 +1,10 @@
 import axios from "axios";
-import {CONSTANTS} from '../../constants';
+import { CONSTANTS } from "../../constants";
 
 const axiosInstance = axios.create({
     baseURL: CONSTANTS.API_SERVER,
     timeout: 1000 * 60 * 3,
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
 });
 
 axiosInstance.interceptors.request.use(
@@ -14,7 +14,7 @@ axiosInstance.interceptors.request.use(
     (error) => {
         console.log(error);
         return Promise.reject(error);
-    }
+    },
 );
 
 axiosInstance.interceptors.response.use(
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
     },
     (error) => {
         return Promise.reject(error);
-    }
+    },
 );
 
 export const apiClient = async (url: string, data: string) => {
@@ -54,4 +54,3 @@ export const apiGetClient = async (url: string) => {
             console.error(e);
         });
 };
-

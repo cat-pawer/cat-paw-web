@@ -9,7 +9,9 @@ module.exports = {
         "plugin:jsx-a11y/recommended",
         "plugin:prettier/recommended",
         "plugin:react-hooks/recommended",
+        "plugin:@typescript-eslint/recommended",
     ],
+    parser: "@typescript-eslint/parser",
     overrides: [
         {
             env: {
@@ -27,14 +29,14 @@ module.exports = {
     },
     plugins: ["react"],
     rules: {
-        'react/jsx-uses-react': 'off',
-        'react/jsx-uses-vars': 'off',
-        'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
-        'prettier/prettier': [
-            'error',
+        "react/jsx-uses-react": "off",
+        "react/jsx-uses-vars": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": "warn",
+        "prettier/prettier": [
+            "error",
             {
-                endOfLine: 'auto',
+                endOfLine: "auto",
             },
         ],
     },

@@ -7,9 +7,9 @@ import ProjectPage from "./views/ProjectPage";
 function App() {
     return (
         <div className="app">
-            <MainPage/>
-            <SubProjectPage/>
-            <ProjectPage/>
+            <MainPage />
+            <SubProjectPage />
+            <ProjectPage />
         </div>
     );
 }

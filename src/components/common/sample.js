@@ -18,14 +18,22 @@ const SamplePage = () => {
     return (
         <div className="main-section">
             <div>
-                <Select value={ selectedOption } onChange={handleSelectChange} options={options}/>
+                <Select
+                    value={selectedOption}
+                    onChange={handleSelectChange}
+                    options={options}
+                />
             </div>
             <div>
                 <button onClick={() => dispatch(decrement())}>1씩 감소</button>
                 <span>{count}</span>
                 <button onClick={() => dispatch(increment())}>1씩 증가</button>
             </div>
-            <div className="main-section-profile" onClick={() => navigate("/myprofile")}>my profile page</div>
+            <div
+                className="main-section-profile"
+                onClick={() => navigate("/myprofile")}>
+                my profile page
+            </div>
         </div>
     );
 };
