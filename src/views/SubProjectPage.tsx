@@ -72,7 +72,9 @@ function SubProjectPage() {
         },
     ];
     const topicProject = async () => {
-        const res = await apiGetClient("/recruit/summary/topics");
+        const res = await apiGetClient(
+            "/recruit/summary/topics?topic=deadLine&isPage=false&page=0&size=1&sort=created",
+        );
         console.log(res);
     };
     useEffect(() => {
