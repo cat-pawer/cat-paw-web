@@ -5,7 +5,7 @@ import Select from "react-select";
 import sampleImg from "../public/images/mainImg.png";
 import starImg from "../public/images/starImg.png";
 
-const searchOption: { value: string; label: string }[] = [
+const searchList: { value: string; label: string }[] = [
     { value: "ALL", label: "전체" },
     { value: "PROJECT", label: "프로젝트" },
     { value: "STUDY", label: "스터디" },
@@ -22,6 +22,10 @@ function MainPage() {
 
     const [categoryFocus, setCategoryFocus] = useState<string[]>([]);
     const [selectOption, setSelectChange] = useState<any>("ALL");
+
+    const handleSelect = (e: any) => {
+      setSelectChange(e.target.value);
+    };
 
     const categoryHandle = (clickCategory: string) => {
         //클릭 요소가 포함되어있는 경우
@@ -53,9 +57,13 @@ function MainPage() {
                     </div>
                     <div className="main-section-title-search">
                         <div className="main-section-title-search-select">
-                            <div></div>
-                            {/*<Select className="select" value={selectOption} onChange={setSelectChange}*/}
-                            {/*        options={searchOption}/>*/}
+                            <select value={selectOption} onChange={handleSelect}>
+                              {searchList.map((item,index) => {
+                                return <option className="select-option" value={item.value} key={item.value}>
+                                  {item.label}
+                                </option>
+                              })}
+                            </select>
                         </div>
                         <FontAwesomeIcon
                             icon={faMagnifyingGlass}

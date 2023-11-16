@@ -33,14 +33,21 @@
 
                 &-select {
                     position: absolute;
+                    left: 3px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
 
-                    .select {
-                        background-color: red;
-                        width: 120px;
-                        height: 63px;
-                        margin: 0;
-                        padding: 0;
-                        border: none;
+                    select{
+                      border: none;
+                      height: 90%;
+                      border-radius: 28px;
+                      text-align: center;
+                      width: 120px;
+                      cursor: pointer;
+                      color: #2583DA;
+                      font-size: 20px;
+                      font-weight: 600;
                     }
                 }
 
