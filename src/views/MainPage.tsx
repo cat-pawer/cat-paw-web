@@ -21,7 +21,7 @@ function MainPage() {
     ];
 
     const [categoryFocus, setCategoryFocus] = useState<string[]>([]);
-    const [selectOption, setSelectChange] = useState<any>("ALL");
+    const [selectOption, setSelectChange] = useState<any>("");
 
     const handleSelect = (e: any) => {
       setSelectChange(e.target.value);

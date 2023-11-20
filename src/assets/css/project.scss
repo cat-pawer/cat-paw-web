@@ -236,10 +236,26 @@
 }
 
 .detail {
-  padding: 160px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  &-btn{
+    display: flex;
+    position: relative;
+    width: 100%;
+    padding: 80px;
+    &-previous{
+      position: absolute;
+      left: 40px;
+    }
+    &-next{
+      position: absolute;
+      right: 40px;
+    }
+    button {
+      cursor: pointer;
+    }
+  }
 
   &-section {
     display: grid;
@@ -460,6 +476,7 @@
           margin: 0 0 0 10px;
 
           svg {
+            cursor: pointer;
             color: #9C9C9C;
             font-size: 25px;
           }
