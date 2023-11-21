@@ -2,7 +2,7 @@ import React from "react";
 import sample1 from "../public/images/sample1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function ProjectDetailPage() {
     const navigate = useNavigate();
@@ -57,21 +57,24 @@ function ProjectDetailPage() {
 
     const goBack = () => {
         navigate(-1);
-    }
+    };
     const handleEnterEvent = (e: any) => {
-        if(e.key === "Enter"){
-            console.log("등록")
+        if (e.key === "Enter") {
+            console.log("등록");
         }
-    }
+    };
     return (
         <div className="detail">
             <div className="detail-btn">
-            <div className="detail-btn-previous" onClick={goBack} role="none">
-                <button>이전</button>
-            </div>
-            <div className="detail-btn-next">
-                <button>버튼</button>
-            </div>
+                <div
+                    className="detail-btn-previous"
+                    onClick={goBack}
+                    role="none">
+                    <button>이전</button>
+                </div>
+                <div className="detail-btn-next">
+                    <button>버튼</button>
+                </div>
             </div>
             <div className="detail-section">
                 <div className="detail-info">

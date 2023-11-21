@@ -24,7 +24,7 @@ function MainPage() {
     const [selectOption, setSelectChange] = useState<any>("");
 
     const handleSelect = (e: any) => {
-      setSelectChange(e.target.value);
+        setSelectChange(e.target.value);
     };
 
     const categoryHandle = (clickCategory: string) => {
@@ -57,12 +57,19 @@ function MainPage() {
                     </div>
                     <div className="main-section-title-search">
                         <div className="main-section-title-search-select">
-                            <select value={selectOption} onChange={handleSelect}>
-                              {searchList.map((item,index) => {
-                                return <option className="select-option" value={item.value} key={item.value}>
-                                  {item.label}
-                                </option>
-                              })}
+                            <select
+                                value={selectOption}
+                                onChange={handleSelect}>
+                                {searchList.map((item, index) => {
+                                    return (
+                                        <option
+                                            className="select-option"
+                                            value={item.value}
+                                            key={item.value}>
+                                            {item.label}
+                                        </option>
+                                    );
+                                })}
                             </select>
                         </div>
                         <FontAwesomeIcon
