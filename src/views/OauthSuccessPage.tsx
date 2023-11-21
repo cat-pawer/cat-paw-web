@@ -15,7 +15,10 @@ function OauthSuccessPage() {
     };
 
     const doProcess = (): void => {
-        window.opener.postMessage({ token: getToken(), from: window.location.href }, "*");
+        window.opener.postMessage(
+            { token: getToken(), from: window.location.href },
+            "*",
+        );
         window.close();
     };
 
