@@ -7,6 +7,8 @@ import App from "./App";
 import MainPage from "./views/MainPage";
 import SubProjectPage from "./views/SubProjectPage";
 import ProjectDetailPage from "./views/ProjectDetailPage";
+import LoginPage from "./views/LoginPage";
+import OauthSuccessPage from "./views/OauthSuccessPage";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +26,14 @@ const router = createBrowserRouter([
     {
         path: "/projectDetail/:index",
         element: <ProjectDetailPage />,
+    },
+    {
+        path: "/login",
+        element: <LoginPage />,
+    },
+    {
+        path: "/oauth/success",
+        element: <OauthSuccessPage />,
     },
 ]);
 

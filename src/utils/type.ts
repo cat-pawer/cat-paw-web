@@ -18,3 +18,8 @@ export interface InfoType {
     comment: string;
     language: string;
 }
+
+export enum OauthProvider {
+    GOOGLE = "google",
+    NAVER = "naver",
+}

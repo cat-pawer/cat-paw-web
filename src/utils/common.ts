@@ -1,4 +1,4 @@
-import { CONSTANTS } from "@/constants";
+import { CONSTANTS } from "src/constants";
 import { type User } from "@/utils/type";
 
 export const getUuid = (): string => {
@@ -20,7 +20,10 @@ export const loadLocalStorage = (key: string): any => {
 };
 //로컬스토리지 저장
 export const saveLocalStorage = (key: string, value: string) => {
-    window.localStorage.setItem(encodeString(key), encodeString(value));
+    window.localStorage.setItem(
+        encodeString(key),
+        encodeString(JSON.stringify(value)),
+    );
 };
 //제거
 export const removeLocalStorage = (key: string) => {
