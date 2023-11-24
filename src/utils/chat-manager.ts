@@ -19,6 +19,7 @@ export class ChatManager extends EventTarget implements ChatInterface {
     private _currentRoomId: undefined | number;
     private _roomList: Array<any>;
     private _socket: SocketClientInterface | undefined;
+    private _isReady: boolean;
     private _isDebug = true;
 
     constructor() {
@@ -26,16 +27,19 @@ export class ChatManager extends EventTarget implements ChatInterface {
         this._currentRoomId = undefined;
         this._roomList = [];
         this._socket = undefined;
+        this._isReady = false;
     }
 
     init(): void {
+        if (this._isReady && this._socket) throw new Error("커넥션 존재");
+        if (this._isDebug) console.log("chat-manager init");
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDisconnect = this.handleDisconnect.bind(this);
         this.addEventListener(CHAT_EVENT.CONNECT, this.handleConnect);
         this.addEventListener(CHAT_EVENT.UPDATE, this.handleUpdate);
         this.addEventListener(CHAT_EVENT.DISCONNECT, this.handleDisconnect);
-
         this._socket = getSocketClient();
+        this._socket.init();
     }
 
     private handleConnect(): any {

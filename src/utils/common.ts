@@ -19,7 +19,7 @@ export const loadLocalStorage = (key: string): any => {
     return null;
 };
 //로컬스토리지 저장
-export const saveLocalStorage = (key: string, value: string) => {
+export const saveLocalStorage = (key: string, value: object) => {
     window.localStorage.setItem(
         encodeString(key),
         encodeString(JSON.stringify(value)),
@@ -46,4 +46,10 @@ export const getUserInfo = (): User | undefined => {
     const loadUserInfo = loadLocalStorage(CONSTANTS.KEY.USER_INFO);
 
     return loadUserInfo ?? undefined;
+};
+
+export const getUserToken = (): { token: string | undefined } => {
+    const userToken = loadLocalStorage(CONSTANTS.KEY.USER_TOKEN);
+
+    return userToken ?? undefined;
 };

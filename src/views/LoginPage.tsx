@@ -1,4 +1,4 @@
-import { loadLocalStorage, saveLocalStorage } from "src/utils/common";
+import { saveLocalStorage } from "src/utils/common";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiGetClient } from "src/utils/api";
@@ -60,25 +60,34 @@ function LoginPage() {
     const originValidator = (event: MessageEvent) => {
         if (!event || !event.data) return false;
         const { token, from } = event.data as { token: string; from: string };
-        return (
-            event.origin !== CONSTANTS.FRONT ||
-            !from.startsWith(`${CONSTANTS.FRONT}oauth/success`)
-        );
+        // return (
+        //     event.origin === CONSTANTS.FRONT &&
+        //     from.startsWith(`${CONSTANTS.FRONT}oauth/success`)
+        // );
+        return from?.indexOf(`${CONSTANTS.FRONT}oauth/success`) > -1;
     };
 
     const tokenValidator = (event: MessageEvent) => {
         if (!event) return false;
         const data = event.data as { token: string; from: string };
+
         return !data || !data.token || data.token.trim() !== "";
     };
 
     const handlePostMessage = (event: MessageEvent) => {
-        if (!originValidator(event) || !tokenValidator(event)) {
+        console.log("post", event);
+        if (!originValidator(event)) return;
+
+        if (!tokenValidator(event)) {
             loginFailProcess();
             return;
         }
 
-        saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, event.data.token as string);
+        console.log("token", event);
+
+        saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, {
+            token: event.data.token as string,
+        });
         loginSuccessProcess();
     };
 
