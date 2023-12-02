@@ -75,16 +75,12 @@ function LoginPage() {
     };
 
     const handlePostMessage = (event: MessageEvent) => {
-        console.log("post", event);
         if (!originValidator(event)) return;
 
         if (!tokenValidator(event)) {
             loginFailProcess();
             return;
         }
-
-        console.log("token", event);
-
         saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, {
             token: event.data.token as string,
         });
