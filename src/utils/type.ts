@@ -19,6 +19,14 @@ export interface InfoType {
     language: string;
 }
 
+export interface TopicType {
+    size: number;
+    topic: string;
+    page: number;
+    sort: string;
+    isPage: boolean
+}
+
 export enum OauthProvider {
     GOOGLE = "google",
     NAVER = "naver",

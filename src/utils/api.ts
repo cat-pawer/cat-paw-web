@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CONSTANTS } from "../constants";
+import {TopicType} from "@/utils/type";
 
 const axiosInstance = axios.create({
     baseURL: CONSTANTS.API_SERVER,
@@ -40,9 +41,20 @@ export const apiClient = async (url: string, data: string) => {
             console.error(e);
         });
 };
-export const apiGetClient = async (url: string) => {
+
+export const apiGetClient = async (url: string, params: TopicType ): Promise<any> => {
+    // try {
+    //     const res = await axiosInstance.get(url, {params});
+    //     if (res.status === 200) {
+    //         return res;
+    //     } else {
+    //         return undefined;
+    //     }
+    // } catch (e) {
+    //     console.error(e);
+    // }
     return await axiosInstance
-        .get(url)
+        .get(url, {params})
         .then((res) => {
             if (res.status === 200) {
                 return res;
@@ -53,4 +65,5 @@ export const apiGetClient = async (url: string) => {
         .catch((e) => {
             console.error(e);
         });
-};
+}
+

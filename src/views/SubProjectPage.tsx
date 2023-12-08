@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { apiGetClient } from "src/utils/api";
 import ProjectList from "../components/board/ProjectList";
+import axios from "axios";
 
 type TopicsType = {
     NEW?: string;
@@ -72,15 +73,21 @@ function SubProjectPage() {
         },
     ];
     const topicProject = async () => {
-        const res = await apiGetClient(
-            "/recruit/summary/topics?topic=deadLine&isPage=false&page=0&size=1&sort=created",
-        );
-        if (res) {
-            if (res.status === 200) {
-                console.log(res.data);
-            }
+        const params = {
+            topic: 'isNew',
+            isPage: false,
+            page: 0,
+            size: 1,
+            sort: 'string'
+        };
+        try {
+            const response = await apiGetClient('recruit/summary/topics',params);
+
+        } catch (error) {
+            console.log(error)
         }
     };
+
     useEffect(() => {
         topicProject();
     }, []);
