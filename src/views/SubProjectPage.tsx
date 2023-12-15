@@ -10,6 +10,7 @@ type TopicsType = {
 
 function SubProjectPage() {
     const topics: TopicsType[] = [{ NEW: "신상" }, { DEAD: "마감" }];
+    let deadLineList:any[] = []
     const newList = [
         {
             division: "📓프로젝트",
@@ -74,17 +75,40 @@ function SubProjectPage() {
     ];
     const topicProject = async () => {
         const params = {
-            topic: 'isNew',
+            topic: 'deadLine',
+            state: 'active',
             isPage: false,
+            recruitPeriod: "",
             page: 0,
             size: 1,
-            sort: 'string'
+            sort: 'string',
         };
-        try {
-            const response = await apiGetClient('recruit/summary/topics',params);
-
-        } catch (error) {
-            console.log(error)
+        // axios.get('https://api.my-pooding.com/api/v1/recruit/summary/topics', {
+        //     params: params,
+        //     headers: {
+        //         'accept': 'application/json'
+        //     }
+        // }).then(res =>{
+        //     console.log("res:",res)
+        // }).catch(error => {
+        //     console.log(error)
+        // })
+        // try {
+        //     const res = await apiGetClient('/recruit/summary/topics?',params);
+        //     console.log("res:",res)
+        //
+        // } catch (error) {
+        //     console.log(error)
+        // }
+        const res = await apiGetClient(
+            "/recruit/summary/topics?topic=deadLine&isPage=false&page=0&size=1&sort=created"
+        );
+        if(res) {
+            if(res.status === 200){
+                console.log("res", res.data.data.content);
+                deadLineList = res.data.data.content;
+                console.log(deadLineList)
+            }
         }
     };
 

@@ -42,7 +42,7 @@ export const apiClient = async (url: string, data: string) => {
         });
 };
 
-export const apiGetClient = async (url: string, params: TopicType ): Promise<any> => {
+export const apiGetClient = async (url: string): Promise<any> => {
     // try {
     //     const res = await axiosInstance.get(url, {params});
     //     if (res.status === 200) {
@@ -54,7 +54,7 @@ export const apiGetClient = async (url: string, params: TopicType ): Promise<any
     //     console.error(e);
     // }
     return await axiosInstance
-        .get(url, {params})
+        .get(url)
         .then((res) => {
             if (res.status === 200) {
                 return res;

@@ -21,10 +21,13 @@ export interface InfoType {
 
 export interface TopicType {
     size: number;
+    state: string;
     topic: string;
+    // pageable: {
     page: number;
     sort: string;
     isPage: boolean
+    // };
 }
 
 export enum OauthProvider {
