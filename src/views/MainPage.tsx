@@ -4,6 +4,8 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
 import sampleImg from "../public/images/mainImg.png";
 import starImg from "../public/images/starImg.png";
+import SubProjectPage from "./SubProjectPage";
+import ProjectPage from "./ProjectPage";
 
 const searchList: { value: string; label: string }[] = [
     { value: "ALL", label: "전체" },
@@ -40,6 +42,7 @@ function MainPage() {
     };
 
     return (
+        <div>
         <div className="main">
             <div className="main-section">
                 <div className="main-section-title">
@@ -104,6 +107,9 @@ function MainPage() {
             <div className="main-image">
                 <img alt="메인 사진" src={sampleImg} />
             </div>
+        </div>
+            <SubProjectPage/>
+            <ProjectPage/>
         </div>
     );
 }
