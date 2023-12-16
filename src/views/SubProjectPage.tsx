@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { apiGetClient } from "src/utils/api";
 import ProjectList from "../components/board/ProjectList";
 import axios from "axios";
@@ -10,110 +10,94 @@ type TopicsType = {
 
 function SubProjectPage() {
     const topics: TopicsType[] = [{ NEW: "신상" }, { DEAD: "마감" }];
-    let deadLineList:any[] = []
+    const [deadLineList, setDeadLineList] = useState([]);
+    const [isNewList, setIsNewList] = useState([]);
+
     const newList = [
         {
-            division: "📓프로젝트",
-            subTitle:
+            recruitType: "📓프로젝트",
+            title:
                 "[프론트/백개발자] 함께 000 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "35",
+            hashTag: "#프론트 #백 #개발자",
+            recruitPeriod: "23.10.12",
+            viewCount: 367,
+            commentCount: 35,
             language: "TypeScript JavaScript Java",
         },
         {
-            division: "📓프로젝트",
-            subTitle:
+            recruitType: "📓프로젝트",
+            title:
                 "[프론트/백개발자] 함께 000 프로젝트 성실하게 임하실 분 구해요. 주 1회 온라인으로만 만나서 빠르게 진행하려고합니다.",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "488",
+            hashTag: "#프론트 #백 #개발자",
+            recruitPeriod: "23.10.12",
+            viewCount: 367,
+            commentCount:488,
             language: "TypeScript JavaScript Java",
         },
         {
-            division: "📙스터디",
-            subTitle:
+            recruitType: "📙스터디",
+            title:
                 "[프론트/백개발자] 함께 xxx 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "38",
+            hashTag: "#프론트 #백 #개발자",
+            recruitPeriod: "23.10.12",
+            viewCount: 367,
+            commentCount: 38,
             language: "TypeScript JavaScript Java",
         },
         {
-            division: "📙스터디",
-            subTitle:
+            recruitType: "📙스터디",
+            title:
                 "[프론트/백개발자] 함께 000 프로젝트 성실하게 임하실 분 구해요. 주 1회 온라인으로만 만나서 빠르게 진행하려고합니다.",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "32",
+            hashTag: "#프론트 #백 #개발자",
+            recruitPeriod: "23.10.12",
+            viewCount: 367,
+            commentCount: 3,
             language: "TypeScript JavaScript Java",
         },
         {
-            division: "📙스터디",
-            subTitle:
+            recruitType: "📙스터디",
+            title:
                 "[프론트/백개발자] 함께 zzz 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "6",
+            hashTag: "#프론트 #백 #개발자",
+            recruitPeriod: "23.10.12",
+            viewCount: 367,
+            commentCount: 6,
             language: "TypeScript JavaScript Java",
         },
         {
-            division: "📓프로젝트",
-            subTitle:
+            recruitType: "📓프로젝트",
+            title:
                 "[프론트/백개발자] 함께 zzz 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "5",
+            hashTag: "#프론트 #백 #개발자",
+            recruitPeriod: "23.10.12",
+            viewCount: 367,
+            commentCount: 5,
             language: "TypeScript JavaScript Java",
         },
     ];
     const topicProject = async () => {
-        const params = {
-            topic: 'deadLine',
-            state: 'active',
-            isPage: false,
-            recruitPeriod: "",
-            page: 0,
-            size: 1,
-            sort: 'string',
-        };
-        // axios.get('https://api.my-pooding.com/api/v1/recruit/summary/topics', {
-        //     params: params,
-        //     headers: {
-        //         'accept': 'application/json'
-        //     }
-        // }).then(res =>{
-        //     console.log("res:",res)
-        // }).catch(error => {
-        //     console.log(error)
-        // })
-        // try {
-        //     const res = await apiGetClient('/recruit/summary/topics?',params);
-        //     console.log("res:",res)
-        //
-        // } catch (error) {
-        //     console.log(error)
-        // }
-        const res = await apiGetClient(
-            "/recruit/summary/topics?topic=deadLine&isPage=false&page=0&size=1&sort=created"
+        const resDead = await apiGetClient(
+            "/recruit/summary/topics?topic=deadLine&isPage=false&page=0&size=5&sort=created"
         );
-        if(res) {
-            if(res.status === 200){
-                console.log("res", res.data.data.content);
-                deadLineList = res.data.data.content;
-                console.log(deadLineList)
+        const resNew = await apiGetClient(
+            "/recruit/summary/topics?topic=isNew&isPage=false&page=0&size=5&sort=created"
+        );
+        if(resDead) {
+            if(resDead.status === 200){
+                console.log("resDead", resDead.data.data.content);
+                setDeadLineList(resDead.data.data.content);
+            }
+        }
+        if(resNew){
+            if(resNew.status === 200){
+                console.log("resNew:", resNew.data.data.content);
+                setIsNewList(resNew.data.data.content);
             }
         }
     };
 
     useEffect(() => {
-        topicProject();
+        topicProject().then(r => console.log("good"));
     }, []);
 
     return (
@@ -130,13 +114,22 @@ function SubProjectPage() {
                         <span>{Object.values(topic)} 프로젝트</span>
                     </div>
                     <div className="project-list">
-                        {newList.map((info, index) => (
+                        {Object.keys(topic)[0] === "NEW"
+                            ? isNewList.map((info, index) => (
                             <ProjectList
                                 key={index}
                                 info={info}
                                 isDead={Object.keys(topic)[0] !== "NEW"}
                             />
-                        ))}
+                        ))
+                            : deadLineList.map((info, index) => (
+                                <ProjectList
+                                    key={index}
+                                    info={info}
+                                    isDead={Object.keys(topic)[0] !== "NEW"}
+                                />
+                            ))
+                        }
                     </div>
                 </div>
             ))}

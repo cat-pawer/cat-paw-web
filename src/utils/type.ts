@@ -10,12 +10,12 @@ export interface CustomMessage {
 }
 
 export interface InfoType {
-    division: string;
-    subTitle: string;
-    tag: string;
-    date: string;
-    hits: string;
-    comment: string;
+    recruitType: string;
+    recruitPeriod: string;
+    title: string;
+    hashTag: string;
+    viewCount: number;
+    commentCount: number;
     language: string;
 }
 
