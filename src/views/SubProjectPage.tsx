@@ -92,12 +92,13 @@ function SubProjectPage() {
             if(resNew.status === 200){
                 console.log("resNew:", resNew.data.data.content);
                 setIsNewList(resNew.data.data.content);
+
             }
         }
     };
 
     useEffect(() => {
-        topicProject().then(r => console.log("good"));
+        topicProject().then(r => null);
     }, []);
 
     return (
@@ -106,12 +107,15 @@ function SubProjectPage() {
                 <div
                     className={
                         Object.keys(topic)[0] === "NEW"
-                            ? "project-new"
-                            : "project-dead"
+                            ? isNewList.length=== 0 ? "project-null" : "project-new"
+                            : deadLineList.length === 0 ? "project-null" : "project-dead"
                     }
                     key={index}>
                     <div className="project-title">
-                        <span>{Object.values(topic)} 프로젝트</span>
+                        {Object.keys(topic)[0] === "NEW" ?
+                            isNewList.length=== 0 ? null : <span>{Object.values(topic)} 프로젝트</span>
+                            : deadLineList.length === 0 ? null : <span>{Object.values(topic)} 프로젝트</span>
+                        }
                     </div>
                     <div className="project-list">
                         {Object.keys(topic)[0] === "NEW"
