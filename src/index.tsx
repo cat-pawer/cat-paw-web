@@ -10,6 +10,7 @@ import ProjectDetailPage from "./views/ProjectDetailPage";
 import LoginPage from "./views/LoginPage";
 import OauthSuccessPage from "./views/OauthSuccessPage";
 import ChatTestPage from "./views/ChatTestPage";
+import MyPage from "./views/MyPage";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
         path: "/chat",
         element: <ChatTestPage />,
     },
+    {
+        path:"/myPage",
+        element: <MyPage />,
+    }
 ]);
 
 const root = ReactDOM.createRoot(

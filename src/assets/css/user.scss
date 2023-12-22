@@ -1,0 +1,107 @@
+.my{
+  &-page{
+    display: flex;
+    &-menu{
+      background: rgba(225, 241, 255, 0.4);
+      height: 100vh;
+      width: 350px;
+      &-info{
+        padding: 45px 40px;
+        &-myPage{
+          margin: 0 0 40px 0;
+          span{
+          font-size: 32px;
+          font-weight: 700;
+          }
+        }
+        &-manage{
+          span{
+            font-size: 24px;
+            font-weight: 700;
+          }
+          ul{
+            margin: 25px 0 0 0;
+             li{
+               margin: 0 0 15px 0;
+               list-style: none;
+               font-size: 18px;
+            }
+          }
+        }
+        &-line{
+          height: 1px;
+          background-color: #C5C4CB;
+          margin: 30px 0;
+        }
+      }
+    }
+    &-section{
+      width: 100%;
+      margin: 0 60px;
+      &-info{
+        &-card{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 40px;
+          border-radius: 16px;
+          border: 1px solid rgba(86, 159, 225, 0.4);
+          background: #FFF;
+          &-flex{
+            &-flex{
+              display: flex;
+              align-items: center;
+              margin-bottom: 15px;
+            &-title{
+              cursor: pointer;
+              span{
+              color: #161724;
+              font-size: 26px;
+              font-weight: 700;
+              }
+            }
+            &-none{
+                margin: 0 15px;
+                span{
+                  font-size: 18px;
+                  color: red;
+                }
+              }
+            }
+            &-sub{
+              span{
+                color: #9C9C9C;
+                font-size: 18px;
+                font-weight: 600;
+              }
+            }
+          }
+          .angleRight{
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            color: #9c9c9c;
+          }
+        }
+      }
+      &-career{
+        margin: 80px 0 0 0;
+        &-flex{
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 20px;
+        &-more{
+          cursor: pointer;
+          span{
+            color: #569FE1;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 600;
+          }
+        }
+        }
+      }
+    }
+  }
+}
