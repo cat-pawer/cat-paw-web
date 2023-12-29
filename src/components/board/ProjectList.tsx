@@ -1,13 +1,16 @@
 import React from "react";
 import { InfoType } from "@/utils/type";
+import {useNavigate} from "react-router-dom";
 
-const ProjectList: React.FC<{ info: InfoType; isDead: boolean }> = ({
+const ProjectList: React.FC<{ info: InfoType; isDead: boolean; index:number }> = ({
     info,
     isDead,
+    index,
 }) => {
+    const navigate = useNavigate();
     return (
         <div className="project-list-section">
-            <div className="project-list-section-card">
+            <div className="project-list-section-card" onClick={() => navigate("/projectDetail/" + index)} role="none">
                 <div className="project-list-section-card-project">
                     <div className="project-list-section-card-project-division">
                         <span>{info.recruitType === "PROJECT" ? "📓프로젝트" : "📙스터디"}</span>

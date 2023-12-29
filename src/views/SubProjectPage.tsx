@@ -122,6 +122,7 @@ function SubProjectPage() {
                             ? isNewList.map((info, index) => (
                             <ProjectList
                                 key={index}
+                                index={index}
                                 info={info}
                                 isDead={Object.keys(topic)[0] !== "NEW"}
                             />
@@ -129,6 +130,7 @@ function SubProjectPage() {
                             : deadLineList.map((info, index) => (
                                 <ProjectList
                                     key={index}
+                                    index={index}
                                     info={info}
                                     isDead={Object.keys(topic)[0] !== "NEW"}
                                 />
