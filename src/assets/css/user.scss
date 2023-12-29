@@ -39,15 +39,17 @@
       width: 100%;
       margin: 0 60px;
       &-info{
+        margin-bottom: 10px;
         &-card{
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 40px;
+          padding: 25px;
           border-radius: 16px;
           border: 1px solid rgba(86, 159, 225, 0.4);
           background: #FFF;
           &-flex{
+            margin: 15px;
             &-flex{
               display: flex;
               align-items: center;
@@ -82,6 +84,38 @@
             height: 25px;
             color: #9c9c9c;
           }
+          &-content{
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            &-title{
+              width: 545px;
+              span{
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                font-size: 18px;
+                font-weight: 600;
+              }
+            }
+            &-dead{
+              margin-right: 30px;
+              span{
+                font-size: 20px;
+                color: #9c9c9c;
+              }
+            }
+            .deadLine{
+              margin-right: 30px;
+              span{
+                font-size: 20px;
+                color: #F36969;
+              }
+            }
+          }
         }
       }
       &-career{
@@ -91,6 +125,7 @@
           align-items: center;
           justify-content: space-between;
           margin-bottom: 20px;
+          cursor: pointer;
         &-more{
           cursor: pointer;
           span{

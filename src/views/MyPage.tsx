@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faAngleRight} from "@fortawesome/free-solid-svg-icons";
+import MyProjectList from "../components/board/MyProjectList";
 
 type categoryType = {
     JOIN?: string;
@@ -10,9 +11,40 @@ type categoryType = {
 function MyPage() {
     const navigate = useNavigate();
     const category: categoryType[] = [{JOIN: "참여한"},{MY:"내"}];
+
+    const projectList = [
+        {
+            content : "[프론트/백개발자] 함께 000프로젝트 성실하게 임하실 분 구해요오오오오오오오오오오오오",
+            deadLine : "2023.12.30",
+        },
+        {
+            content : "[프론트/백개발자] 함께 000프로젝트 성실하게 임하실 분 구해요",
+            deadLine : "2024.01.09",
+        },
+        {
+            content : "[프론트/백개발자] 함께 000프로젝트 성실하게 임하실 분 구해요이",
+            deadLine : "2024.01.20",
+        },
+    ]
+    function calculateDDay(deadline: any) {
+        const today:any = new Date();
+        const deadLineDay:any = new Date(deadline);
+        const timeDiff = deadLineDay - today;
+        const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+        if (dayDiff == 0) {
+            return "day"
+        } else return dayDiff
+    }
+    const formedProjectList = projectList.map((project)=>({
+        ...project,
+        deadLine: calculateDDay(project.deadLine),
+    }))
     const goBack = () => {
         navigate(-1);
     };
+    useEffect((()=>{
+
+    }))
     return (
         <div className="my">
             <div className="detail-btn">
@@ -56,12 +88,12 @@ function MyPage() {
                        <div className="my-page-section-info-card">
                            <div className="my-page-section-info-card-flex">
                                <div className="my-page-section-info-card-flex-flex">
-                               <div className="my-page-section-info-card-flex-flex-title">
-                                   <span>내 포트폴리오</span>
-                               </div>
-                               <div className="my-page-section-info-card-flex-flex-none">
-                                   <span>없음</span>
-                               </div>
+                                   <div className="my-page-section-info-card-flex-flex-title">
+                                       <span>내 포트폴리오</span>
+                                   </div>
+                                   <div className="my-page-section-info-card-flex-flex-none">
+                                       <span>없음</span>
+                                   </div>
                                </div>
                                <div className="my-page-section-info-card-flex-sub">
                                    <span>메인으로 설정한 포트폴리오 제목이 노출됩니다.</span>
@@ -73,7 +105,7 @@ function MyPage() {
                        </div>
                    </div>
                    {category.map((category,index) => (
-                       <div className="my-page-section-career">
+                       <div className="my-page-section-career" key={index}>
                            <div className="my-page-section-career-flex">
                                <div className="my-page-section-info-card-flex-flex-title">
                                    <span>{Object.values(category)} 프로젝트/ 스터디</span>
@@ -82,9 +114,9 @@ function MyPage() {
                                    <span>더보기</span>
                                </div>
                            </div>
-                           <div  className="my-page-section-info">
-                               <div className="my-page-section-info-card"></div>
-                           </div>
+                           {formedProjectList.map((project,index)=>(
+                               <MyProjectList key={index} info={project} index={index} />
+                           ))}
                        </div>
                    ))}
                </div>

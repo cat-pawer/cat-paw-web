@@ -1,6 +1,5 @@
 import axios from "axios";
 import { CONSTANTS } from "../constants";
-import {TopicType} from "@/utils/type";
 
 const axiosInstance = axios.create({
     baseURL: CONSTANTS.API_SERVER,

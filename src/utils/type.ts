@@ -17,17 +17,11 @@ export interface InfoType {
     viewCount: number;
     commentCount: number;
     language: string;
-}
 
-export interface TopicType {
-    size: number;
-    state: string;
-    topic: string;
-    // pageable: {
-    page: number;
-    sort: string;
-    isPage: boolean
-    // };
+}
+export interface projectInfoType {
+    deadLine: any;
+    content: string;
 }
 
 export enum OauthProvider {

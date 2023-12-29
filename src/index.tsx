@@ -11,6 +11,7 @@ import LoginPage from "./views/LoginPage";
 import OauthSuccessPage from "./views/OauthSuccessPage";
 import ChatTestPage from "./views/ChatTestPage";
 import MyPage from "./views/MyPage";
+import MyProjectDetailPage from "./views/MyProjectDetailPage";
 
 const router = createBrowserRouter([
     {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
     {
         path:"/myPage",
         element: <MyPage />,
+    },
+    {
+        path:"/myProjectDetail/:index",
+        element: <MyProjectDetailPage />,
     }
 ]);
 

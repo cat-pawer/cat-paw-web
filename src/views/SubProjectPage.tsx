@@ -102,7 +102,7 @@ function SubProjectPage() {
     }, []);
 
     return (
-        <div className="project">
+        <div className={isNewList.length ===0 && deadLineList.length === 0 ? "project-null" : "project"}>
             {topics.map((topic, index) => (
                 <div
                     className={
