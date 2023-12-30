@@ -3,6 +3,7 @@ import sample1 from "../public/images/sample1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import GoBackBtn from "../components/common/GoBackBtn";
 
 function ProjectDetailPage() {
     const navigate = useNavigate();
@@ -55,9 +56,6 @@ function ProjectDetailPage() {
         },
     ];
 
-    const goBack = () => {
-        navigate(-1);
-    };
     const handleEnterEvent = (e: any) => {
         if (e.key === "Enter") {
             console.log("등록");
@@ -65,17 +63,7 @@ function ProjectDetailPage() {
     };
     return (
         <div className="detail">
-            <div className="detail-btn">
-                <div
-                    className="detail-btn-previous"
-                    onClick={goBack}
-                    role="none">
-                    <button>이전</button>
-                </div>
-                <div className="detail-btn-next">
-                    <button>버튼</button>
-                </div>
-            </div>
+            <GoBackBtn />
             <div className="detail-section">
                 <div className="detail-info">
                     <div className="detail-info-tag">
@@ -83,9 +71,7 @@ function ProjectDetailPage() {
                     </div>
                     <div className="detail-info-title">
                         <span>
-                            [프론트/백개발자] 함께 000 프로젝트 성실하게 임하실
-                            분 구해요. 주 1회 온라인으로만 만나서 빠르게
-                            진행하려고 합니다. 어쩌구 저쩌구 이러쿵 저러쿵
+                            [프론트/백개발자] 함께 000 프로젝트 성실하게 임하실분 구해요.
                         </span>
                     </div>
                     <div className="detail-info-nickname">

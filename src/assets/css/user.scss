@@ -139,4 +139,34 @@
       }
     }
   }
+  &-job{
+    width: 960px;
+    &-management{
+      margin-bottom: 50px;
+      &-chart{
+        height: 360px;
+        border-radius: 10px;
+        border: 1px solid #569FE1;
+      }
+    }
+    &-enter{
+      margin-bottom: 80px;
+      &-title{
+        cursor: pointer;
+        span{
+          color: #9c9c9c;
+          font-size: 26px;
+          font-weight: 700;
+        }
+      }
+      &-chart{
+        height: 121px;
+        border-radius: 10px;
+        border: 1px solid #569FE1;
+      }
+    }
+    &-calender{
+      display: flex;
+    }
+  }
 }
