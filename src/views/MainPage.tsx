@@ -43,73 +43,75 @@ function MainPage() {
 
     return (
         <div>
-        <div className="main">
-            <div className="main-section">
-                <div className="main-section-title">
-                    <div className="main-section-title-star">
-                        <img alt="star img" src={starImg} />
-                    </div>
-                    <div className="main-section-title-talk">
-                        <span>프로젝트를</span>
-                        <br />
-                        <span>만나볼 준비 되었나요?</span>
-                        <br />
-                        <div className="main-section-title-talk-banner">
-                            원하는 프로젝트는 다 만날 수 있어요!
+            <div className="main">
+                <div className="main-section">
+                    <div className="main-section-title">
+                        <div className="main-section-title-star">
+                            <img alt="star img" src={starImg} />
+                        </div>
+                        <div className="main-section-title-talk">
+                            <span>프로젝트를</span>
+                            <br />
+                            <span>만나볼 준비 되었나요?</span>
+                            <br />
+                            <div className="main-section-title-talk-banner">
+                                원하는 프로젝트는 다 만날 수 있어요!
+                            </div>
+                        </div>
+                        <div className="main-section-title-search">
+                            <div className="main-section-title-search-select">
+                                <select
+                                    value={selectOption}
+                                    onChange={handleSelect}>
+                                    {searchList.map((item, index) => {
+                                        return (
+                                            <option
+                                                className="select-option"
+                                                value={item.value}
+                                                key={item.value}>
+                                                {item.label}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <FontAwesomeIcon
+                                icon={faMagnifyingGlass}
+                                className="glass"
+                            />
+                            <input
+                                className="search-input"
+                                type="text"
+                                placeholder=""
+                            />
                         </div>
                     </div>
-                    <div className="main-section-title-search">
-                        <div className="main-section-title-search-select">
-                            <select
-                                value={selectOption}
-                                onChange={handleSelect}>
-                                {searchList.map((item, index) => {
-                                    return (
-                                        <option
-                                            className="select-option"
-                                            value={item.value}
-                                            key={item.value}>
-                                            {item.label}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <FontAwesomeIcon
-                            icon={faMagnifyingGlass}
-                            className="glass"
-                        />
-                        <input
-                            className="search-input"
-                            type="text"
-                            placeholder=""
-                        />
+                    <div className="main-section-categoryList">
+                        {mainCategoryList.map((category, index) => (
+                            <div
+                                className={
+                                    categoryFocus.includes(
+                                        Object.keys(category)[0],
+                                    )
+                                        ? "focus"
+                                        : "category"
+                                }
+                                key={index}
+                                onClick={() => {
+                                    categoryHandle(Object.keys(category)[0]);
+                                }}
+                                role="none">
+                                <span>{Object.values(category)}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div className="main-section-categoryList">
-                    {mainCategoryList.map((category, index) => (
-                        <div
-                            className={
-                                categoryFocus.includes(Object.keys(category)[0])
-                                    ? "focus"
-                                    : "category"
-                            }
-                            key={index}
-                            onClick={() => {
-                                categoryHandle(Object.keys(category)[0]);
-                            }}
-                            role="none">
-                            <span>{Object.values(category)}</span>
-                        </div>
-                    ))}
+                <div className="main-image">
+                    <img alt="메인 사진" src={sampleImg} />
                 </div>
             </div>
-            <div className="main-image">
-                <img alt="메인 사진" src={sampleImg} />
-            </div>
-        </div>
-            <SubProjectPage/>
-            <ProjectPage/>
+            <SubProjectPage />
+            <ProjectPage />
         </div>
     );
 }

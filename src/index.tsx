@@ -43,13 +43,13 @@ const router = createBrowserRouter([
         element: <ChatTestPage />,
     },
     {
-        path:"/myPage",
+        path: "/myPage",
         element: <MyPage />,
     },
     {
-        path:"/myProjectDetail/:index",
+        path: "/myProjectDetail/:index",
         element: <MyProjectDetailPage />,
-    }
+    },
 ]);
 
 const root = ReactDOM.createRoot(

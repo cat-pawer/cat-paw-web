@@ -71,7 +71,8 @@ function ProjectDetailPage() {
                     </div>
                     <div className="detail-info-title">
                         <span>
-                            [프론트/백개발자] 함께 000 프로젝트 성실하게 임하실분 구해요.
+                            [프론트/백개발자] 함께 000 프로젝트 성실하게
+                            임하실분 구해요.
                         </span>
                     </div>
                     <div className="detail-info-nickname">

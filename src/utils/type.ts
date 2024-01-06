@@ -1,13 +1,27 @@
-export interface User {
+export type User = {
     id: string;
     name: string;
+    profile: string;
+};
+
+export type CustomMessage = {
+    destination?: string;
+    headers?: object;
+    body: MessageDto;
+};
+
+export enum MessageType {
+    JOIN = "JOIN",
 }
 
-export interface CustomMessage {
-    destination: string;
-    headers?: object;
-    body?: object;
-}
+export type MessageDto = {
+    memberId: string;
+    groupId?: string;
+    targetId?: string;
+    messageType?: MessageType;
+    data?: string;
+    subData?: string;
+};
 
 export interface InfoType {
     recruitType: string;
@@ -17,7 +31,6 @@ export interface InfoType {
     viewCount: number;
     commentCount: number;
     language: string;
-
 }
 export interface projectInfoType {
     deadLine: any;

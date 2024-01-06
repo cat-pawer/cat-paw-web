@@ -2,7 +2,7 @@ import React from "react";
 import GoBackBtn from "../components/common/GoBackBtn";
 
 function MyProjectDetailPage() {
-    return(
+    return (
         <div className="detail">
             <GoBackBtn />
             <div className="detail-section">
@@ -11,14 +11,23 @@ function MyProjectDetailPage() {
                 </div>
                 <div className="detail-info">
                     <div className="detail-info-flex">
-                    <div>
-                        <div className="detail-info-title"><span>인국이와 웹사이트 만들기</span></div>
-                        <div className="detail-info-flex-deadLine"><span>🚨</span><span>프로젝트 종료일 24.02.23</span></div>
-                        <div className="detail-info-nickname"><span>참여자: 김인국, 김인국1, 김인국2, 김인국3</span></div>
-                    </div>
-                    <div className="detail-info-flex-infoBtn">
-                        <button>정보 보기</button>
-                    </div>
+                        <div>
+                            <div className="detail-info-title">
+                                <span>인국이와 웹사이트 만들기</span>
+                            </div>
+                            <div className="detail-info-flex-deadLine">
+                                <span>🚨</span>
+                                <span>프로젝트 종료일 24.02.23</span>
+                            </div>
+                            <div className="detail-info-nickname">
+                                <span>
+                                    참여자: 김인국, 김인국1, 김인국2, 김인국3
+                                </span>
+                            </div>
+                        </div>
+                        <div className="detail-info-flex-infoBtn">
+                            <button>정보 보기</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,8 +42,7 @@ function MyProjectDetailPage() {
                         </div>
                     </div>
                     <div className="my-job-management-chart">
-                        <div>
-                        </div>
+                        <div></div>
                     </div>
                 </div>
                 <div className="my-job-enter">
@@ -47,9 +55,7 @@ function MyProjectDetailPage() {
                         </div>
                     </div>
                     <div className="my-job-enter-chart">
-                        <div>
-
-                        </div>
+                        <div></div>
                     </div>
                 </div>
             </div>
@@ -64,9 +70,7 @@ function MyProjectDetailPage() {
                             <span>편집</span>
                         </div>
                         <div>
-                            <div>
-
-                            </div>
+                            <div></div>
                         </div>
                     </div>
                 </div>
@@ -82,7 +86,7 @@ function MyProjectDetailPage() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default MyProjectDetailPage;

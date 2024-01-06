@@ -1,5 +1,5 @@
 import React from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function GoBackBtn() {
     const navigate = useNavigate();
@@ -7,19 +7,16 @@ function GoBackBtn() {
     const goBack = () => {
         navigate(-1);
     };
-    return(
+    return (
         <div className="detail-btn">
-            <div
-                className="detail-btn-previous"
-                onClick={goBack}
-                role="none">
+            <div className="detail-btn-previous" onClick={goBack} role="none">
                 <button>이전</button>
             </div>
             <div className="detail-btn-next">
                 <button>버튼</button>
             </div>
         </div>
-    )
+    );
 }
 
 export default GoBackBtn;

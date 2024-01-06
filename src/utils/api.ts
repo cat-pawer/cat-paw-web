@@ -42,6 +42,16 @@ export const apiClient = async (url: string, data: string) => {
 };
 
 export const apiGetClient = async (url: string): Promise<any> => {
+    // try {
+    //     const res = await axiosInstance.get(url, {params});
+    //     if (res.status === 200) {
+    //         return res;
+    //     } else {
+    //         return undefined;
+    //     }
+    // } catch (e) {
+    //     console.error(e);
+    // }
     return await axiosInstance
         .get(url)
         .then((res) => {
@@ -54,5 +64,4 @@ export const apiGetClient = async (url: string): Promise<any> => {
         .catch((e) => {
             console.error(e);
         });
-}
-
+};
