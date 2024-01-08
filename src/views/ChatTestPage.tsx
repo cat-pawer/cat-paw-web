@@ -8,8 +8,8 @@ import { CustomMessage, OauthProvider, User } from "../utils/type";
 import { getChatManager } from "../utils/chat-manager";
 
 function ChatTestPage() {
-    const handleClick = () => {
-        apiGetClient("http://localhost:8080/api/v1/member/token")
+    const handleClick = (id: string) => {
+        apiGetClient(`http://localhost:8080/api/v1/member/token/${id}`)
             .then((res) => {
                 const token = res.data.data;
                 console.log("token" + token);
@@ -18,7 +18,7 @@ function ChatTestPage() {
             .catch((e) => console.log(e));
 
         saveLocalStorage(CONSTANTS.KEY.USER_INFO, {
-            id: "1",
+            id: Number(id),
             name: "hello",
         } as User);
     };
@@ -36,7 +36,7 @@ function ChatTestPage() {
 
     useEffect(() => {
         console.log("call");
-        getChatManager().init("1");
+        getChatManager().init(1);
         return () => {
             getChatManager().destroy();
         };
@@ -44,7 +44,8 @@ function ChatTestPage() {
 
     return (
         <div>
-            <button onClick={handleClick}>토큰 새로고침</button>
+            <button onClick={() => handleClick("1")}>토큰1 새로고침</button>
+            <button onClick={() => handleClick("2")}>토큰2 새로고침</button>
             <button onClick={handleSend}>전송</button>
         </div>
     );

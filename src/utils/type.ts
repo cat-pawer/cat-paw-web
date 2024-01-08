@@ -1,5 +1,5 @@
 export type User = {
-    id: string;
+    id: number;
     name: string;
     profile: string;
 };
@@ -11,16 +11,19 @@ export type CustomMessage = {
 };
 
 export enum MessageType {
+    INIT = "INIT",
+    INIT_DATA = "INIT_DATA",
+    INIT_COMPLETE = "INIT_COMPLETE",
     JOIN = "JOIN",
 }
 
 export type MessageDto = {
-    memberId: string;
-    groupId?: string;
-    targetId?: string;
+    memberId: number;
+    groupId?: number;
+    targetId?: number;
     messageType?: MessageType;
-    data?: string;
-    subData?: string;
+    data?: any;
+    subData?: any;
 };
 
 export interface InfoType {

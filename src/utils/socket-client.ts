@@ -7,7 +7,8 @@ import { CustomMessage, MessageDto, MessageType } from "./type";
 
 export enum SOCKET_EVENT {
     CONNECT = "SOCKET_CONNECT",
-    JOIN = "SOCKET_JOIN",
+    INIT = "SOCKET_INIT",
+    INIT_COMPELETE = "SOCKET_INIT_COMPLETE",
     UPDATE = "SOCKET_UPDATE",
     DISCONNECT = "SOCKET_DISCONNECT",
 }
@@ -18,7 +19,7 @@ export function createSocketFactory() {
 
 export interface SocketClientInterface extends EventTarget {
     init(): void;
-    join(projectId: string): void;
+    doInit(projectId: number): void;
     sendMessage(message: CustomMessage): void;
     release(): void;
 }
@@ -42,10 +43,11 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
         this.connect();
     }
 
-    join(groupId: string): void {
+    doInit(groupId: number): void {
         if (this._client && this._connected) {
             this._client.subscribe(`/topic/${groupId}`, this.handleUpdate, {});
-            getChatManager().dispatchEvent(new Event(SOCKET_EVENT.JOIN));
+
+            getChatManager().dispatchEvent(new Event(SOCKET_EVENT.INIT));
         }
     }
 
@@ -56,10 +58,8 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
         });
         this._client = Stomp.over(ws);
         const headers = {
-            token: getUserToken()
-                ? getUserToken().token
-                : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6Im1lbWJlciJ9XSwiaWF0IjoxNzA0MDAxNzcxLCJleHAiOjE3MDQwMDM1NzF9.qn5XXT8fbe2-JuV3msSDarLr5ZPWozjkEAGx57O0-h0",
-            passcode: getUserToken() ? getUserToken().token : "",
+            token: getUserToken() ? getUserToken() : "",
+            passcode: getUserToken() ? getUserToken() : "",
         };
         if (this._isDebug) console.log("headers = ", headers);
         this._client.connect(headers, this.handleConnect, this.handleError);
@@ -119,11 +119,7 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
         socketClient = undefined;
     }
     private getConnectionUrl(): string {
-        const query = `token=${
-            getUserToken()
-                ? getUserToken()
-                : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlt7ImF1dGhvcml0eSI6Im1lbWJlciJ9XSwiaWF0IjoxNzA0NDYyMzczLCJleHAiOjE3MDQ0NjQxNzN9.h8AYoPbZ3UxAM52MTnbY6VzGnUPr_5dfOzztliVBiHs"
-        }`;
+        const query = `token=${getUserToken() ? getUserToken() : ""}`;
 
         return `${CONSTANTS.CHAT_SERVER}?${query}`;
     }
