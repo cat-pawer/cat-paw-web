@@ -20,14 +20,22 @@ export interface ChatInterface extends EventTarget {
     // leave(): void;
     sendMessage(msg: CustomMessage): void;
     destroy(): void;
+    addSchedule(title: string): void;
+    removeSchedule(scheduleId: number): void;
+    addScheduleSummary(scheduleId: number, title: string): void;
+    updateScheduleSummary(scheduleId: number, summary: ScheduleSummary): void;
+
     getGroupId(): number | undefined;
+    getMemberList(): Array<MemberInfo>;
+    getCurrentMemberList(): Array<OnlineMemberInfo>;
+    getScheduleList(): Array<Schedule>;
 }
 
 export type Schedule = {
-    scheduleId: number;
+    id: number;
     title: string;
     body: string;
-    summaryList: Array<ScheduleSummary>;
+    scheduleSummaryDtoList: Array<ScheduleSummary>;
     created: Date;
     updated: Date;
     createdBy: string;
@@ -35,12 +43,12 @@ export type Schedule = {
 };
 
 export type ScheduleSummary = {
-    scheduleSummnaryId: number;
+    id: number;
     cMemberId: number;
     title: string;
     startDate: Date;
     endDate: Date;
-    status: string;
+    status: number;
     created: Date;
     updated: Date;
     createdBy: string;
@@ -93,16 +101,12 @@ export class ChatManager extends EventTarget implements ChatInterface {
 
         this.handleConnect = this.handleConnect.bind(this);
         this.handleInit = this.handleInit.bind(this);
-        this.handleInitComplete = this.handleInitComplete.bind(this);
+        // this.handleInitComplete = this.handleInitComplete.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDisconnect = this.handleDisconnect.bind(this);
 
         this.addEventListener(SOCKET_EVENT.CONNECT, this.handleConnect);
         this.addEventListener(SOCKET_EVENT.INIT, this.handleInit);
-        this.addEventListener(
-            SOCKET_EVENT.INIT_COMPELETE,
-            this.handleInitComplete,
-        );
         this.addEventListener(SOCKET_EVENT.UPDATE, this.handleUpdate);
         this.addEventListener(SOCKET_EVENT.DISCONNECT, this.handleDisconnect);
 
@@ -124,31 +128,27 @@ export class ChatManager extends EventTarget implements ChatInterface {
             destination: `/app/message/init`,
             headers: {},
             body: {
-                memberId: new Number(getUserInfo()?.id),
-                groupId: this._groupId,
                 messageType: MessageType.INIT,
             } as MessageDto,
         } as CustomMessage);
     }
 
-    private handleInitComplete(): void {
-        this.dispatchEvent(new Event(CHAT_EVENT.INIT_COMPLETE));
-    }
+    // private handleInitComplete(): void {
+    //     this.dispatchEvent(new Event(CHAT_EVENT.INIT_COMPLETE));
+    // }
 
     private handleUpdate(event: Event): void {
         if (this._isDebug) console.log("chat-manager handleUpdate", event);
         const message = (event as CustomEvent).detail as MessageDto;
-        console.log("message", message);
-        console.log("userinfo = ", getUserInfo()?.id);
-        console.log("message id = ", message.memberId);
-        console.log("target id = ", message.targetId);
         switch (message.messageType) {
             case MessageType.INIT: {
-                this._memberList = message.subData.totalMemberList;
-                this._onlineMemberList = message.subData.currentMemberList;
-                this._codeList = message.subData.codeList;
                 if (message.memberId === this._memberId) {
                     if (message.data.ready) {
+                        this._memberList = message.subData.totalMemberList;
+                        this._onlineMemberList =
+                            message.subData.currentMemberList;
+                        this._codeList = message.subData.codeList;
+                        this._scheduleList = message.data.scheduleDtoList;
                         this.sendMessage({
                             destination: `/app/message/init_complete`,
                             headers: {},
@@ -157,7 +157,7 @@ export class ChatManager extends EventTarget implements ChatInterface {
                             },
                         } as CustomMessage);
                     } else {
-                        this._scheduleList = message.data;
+                        this._scheduleList = message.data.scheduleDtoList;
                     }
                 } else {
                     if (message.targetId === this._memberId) {
@@ -171,6 +171,9 @@ export class ChatManager extends EventTarget implements ChatInterface {
                             },
                         } as CustomMessage);
                     } else {
+                        this._memberList = message.subData.totalMemberList;
+                        this._onlineMemberList =
+                            message.subData.currentMemberList;
                         this.dispatchEvent(
                             new CustomEvent(CHAT_EVENT.JOIN, {
                                 detail: { memberId: message.memberId },
@@ -189,10 +192,61 @@ export class ChatManager extends EventTarget implements ChatInterface {
             }
             case MessageType.INIT_DATA: {
                 if (this._memberId === message.targetId) {
+                    console.warn(message.data);
                     this._scheduleList = message.data;
                     this._isReady = true;
                     this.dispatchEvent(new Event(CHAT_EVENT.INIT_COMPLETE));
                 }
+                break;
+            }
+            case MessageType.ADD_SUMMARY: {
+                this.dispatchEvent(
+                    new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                );
+                break;
+            }
+            case MessageType.UPDATE_SUMMARY: {
+                const findSchedule = this._scheduleList.filter(
+                    (schedule) => schedule.id === message.targetId,
+                );
+                if (findSchedule && findSchedule.length > 0) {
+                    const index =
+                        findSchedule[0].scheduleSummaryDtoList.findIndex(
+                            (summary) => summary.id === message.data.id,
+                        );
+                    if (index > -1) {
+                        findSchedule[0].scheduleSummaryDtoList[index] =
+                            message.data;
+                        this.dispatchEvent(
+                            new CustomEvent(CHAT_EVENT.UPDATE, {
+                                detail: message,
+                            }),
+                        );
+                    }
+                }
+                break;
+            }
+            case MessageType.REMOVE_SUMMARY: {
+                this.dispatchEvent(
+                    new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                );
+                break;
+            }
+            case MessageType.ADD_SCHEDULE: {
+                this._scheduleList.push(message.data);
+                this.dispatchEvent(
+                    new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                );
+                break;
+            }
+            case MessageType.REMOVE_SCHEDULE: {
+                this._scheduleList = this._scheduleList.filter(
+                    (schedule) => schedule.id !== message.targetId,
+                );
+                this.dispatchEvent(
+                    new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                );
+                break;
             }
         }
     }
@@ -229,8 +283,71 @@ export class ChatManager extends EventTarget implements ChatInterface {
         chatManager = undefined;
     }
 
+    addSchedule(title: string): void {
+        if (title.trim() === "") return;
+        this.sendMessage({
+            destination: "/app/message/update",
+            headers: {},
+            body: {
+                messageType: MessageType.ADD_SCHEDULE,
+                data: title,
+            } as MessageDto,
+        } as CustomMessage);
+    }
+
+    removeSchedule(scheduleId: number): void {
+        if (!scheduleId) return;
+
+        this.sendMessage({
+            destination: "/app/message/update",
+            headers: {},
+            body: {
+                messageType: MessageType.REMOVE_SCHEDULE,
+                targetId: scheduleId,
+            } as MessageDto,
+        } as CustomMessage);
+    }
+
+    addScheduleSummary(scheduleId: number, title: string): void {
+        if (!scheduleId || title.trim() === "") return;
+        this.sendMessage({
+            destination: "/app/message/update",
+            headers: {},
+            body: {
+                messageType: MessageType.ADD_SUMMARY,
+                targetId: scheduleId,
+                data: title,
+            } as MessageDto,
+        } as CustomMessage);
+    }
+
+    updateScheduleSummary(scheduleId: number, summary: ScheduleSummary): void {
+        if (!summary || !summary.id) return;
+        this.sendMessage({
+            destination: "/app/message/update",
+            headers: {},
+            body: {
+                messageType: MessageType.UPDATE_SUMMARY,
+                targetId: scheduleId,
+                data: JSON.stringify(summary),
+            } as MessageDto,
+        } as CustomMessage);
+    }
+
     getGroupId(): number | undefined {
         return this._groupId;
+    }
+
+    getMemberList(): Array<MemberInfo> {
+        return this._memberList;
+    }
+
+    getCurrentMemberList(): Array<OnlineMemberInfo> {
+        return this._onlineMemberList;
+    }
+
+    getScheduleList(): Array<Schedule> {
+        return this._scheduleList;
     }
 }
 
