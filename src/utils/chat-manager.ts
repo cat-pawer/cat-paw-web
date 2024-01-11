@@ -11,6 +11,7 @@ export enum CHAT_EVENT {
     INIT = "INIT",
     INIT_COMPLETE = "INIT_COMPLETE",
     JOIN = "JOIN",
+    LEAVE = "LEAVE",
     UPDATE = "UPDATE",
     DISCONNECT = "DISCONNECT",
 }
@@ -24,7 +25,7 @@ export interface ChatInterface extends EventTarget {
     removeSchedule(scheduleId: number): void;
     addScheduleSummary(scheduleId: number, title: string): void;
     updateScheduleSummary(scheduleId: number, summary: ScheduleSummary): void;
-
+    removeScheduleSummary(scheduleId: number, removeList: Array<number>): void;
     getGroupId(): number | undefined;
     getMemberList(): Array<MemberInfo>;
     getCurrentMemberList(): Array<OnlineMemberInfo>;
@@ -101,7 +102,6 @@ export class ChatManager extends EventTarget implements ChatInterface {
 
         this.handleConnect = this.handleConnect.bind(this);
         this.handleInit = this.handleInit.bind(this);
-        // this.handleInitComplete = this.handleInitComplete.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
         this.handleDisconnect = this.handleDisconnect.bind(this);
 
@@ -132,10 +132,6 @@ export class ChatManager extends EventTarget implements ChatInterface {
             } as MessageDto,
         } as CustomMessage);
     }
-
-    // private handleInitComplete(): void {
-    //     this.dispatchEvent(new Event(CHAT_EVENT.INIT_COMPLETE));
-    // }
 
     private handleUpdate(event: Event): void {
         if (this._isDebug) console.log("chat-manager handleUpdate", event);
@@ -192,7 +188,6 @@ export class ChatManager extends EventTarget implements ChatInterface {
             }
             case MessageType.INIT_DATA: {
                 if (this._memberId === message.targetId) {
-                    console.warn(message.data);
                     this._scheduleList = message.data;
                     this._isReady = true;
                     this.dispatchEvent(new Event(CHAT_EVENT.INIT_COMPLETE));
@@ -200,9 +195,15 @@ export class ChatManager extends EventTarget implements ChatInterface {
                 break;
             }
             case MessageType.ADD_SUMMARY: {
-                this.dispatchEvent(
-                    new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                const findSchedule = this._scheduleList.filter(
+                    (schedule) => schedule.id === message.targetId,
                 );
+                if (findSchedule && findSchedule.length > 0) {
+                    findSchedule[0].scheduleSummaryDtoList.push(message.data);
+                    this.dispatchEvent(
+                        new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                    );
+                }
                 break;
             }
             case MessageType.UPDATE_SUMMARY: {
@@ -227,9 +228,20 @@ export class ChatManager extends EventTarget implements ChatInterface {
                 break;
             }
             case MessageType.REMOVE_SUMMARY: {
-                this.dispatchEvent(
-                    new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                const findSchedule = this._scheduleList.find(
+                    (schedule) => schedule.id === message.targetId,
                 );
+                if (findSchedule) {
+                    for (const id of message.data as Array<number>) {
+                        findSchedule.scheduleSummaryDtoList =
+                            findSchedule.scheduleSummaryDtoList.filter(
+                                (summary) => summary.id !== id,
+                            );
+                    }
+                    this.dispatchEvent(
+                        new CustomEvent(CHAT_EVENT.UPDATE, { detail: message }),
+                    );
+                }
                 break;
             }
             case MessageType.ADD_SCHEDULE: {
@@ -248,6 +260,16 @@ export class ChatManager extends EventTarget implements ChatInterface {
                 );
                 break;
             }
+            case MessageType.LEAVE: {
+                if (this._groupId === message.groupId) {
+                    this._memberList = this._memberList.filter(
+                        (member) => member.memberId !== member.memberId,
+                    );
+                    this.dispatchEvent(
+                        new CustomEvent(CHAT_EVENT.LEAVE, { detail: message }),
+                    );
+                }
+            }
         }
     }
 
@@ -255,15 +277,6 @@ export class ChatManager extends EventTarget implements ChatInterface {
         if (this._isDebug) console.log("disconnectss");
         this._socket = undefined;
     }
-
-    // leave(): void {
-    //     if (this._isDebug) console.log("chat-manager leave");
-    //     if (this._socket)
-    //         this._socket.sendMessage({
-    //             destination: "/topic",
-    //             body: { roomId: this._currentRoomId },
-    //         });
-    // }
 
     sendMessage(msg: CustomMessage): void {
         if (this._isDebug) console.log("chat-manager sendMessage");
@@ -278,7 +291,7 @@ export class ChatManager extends EventTarget implements ChatInterface {
 
     destroy(): void {
         if (this._isDebug) console.log("chat-manager destroy");
-        if (this._socket) this._socket.release();
+        this._socket?.release();
         this._socket = undefined;
         chatManager = undefined;
     }
@@ -330,6 +343,19 @@ export class ChatManager extends EventTarget implements ChatInterface {
                 messageType: MessageType.UPDATE_SUMMARY,
                 targetId: scheduleId,
                 data: JSON.stringify(summary),
+            } as MessageDto,
+        } as CustomMessage);
+    }
+
+    removeScheduleSummary(scheduleId: number, removeList: Array<number>): void {
+        if (!scheduleId || removeList.length < 1) return;
+        this.sendMessage({
+            destination: "/app/message/update",
+            headers: {},
+            body: {
+                messageType: MessageType.REMOVE_SUMMARY,
+                targetId: scheduleId,
+                data: JSON.stringify(removeList),
             } as MessageDto,
         } as CustomMessage);
     }

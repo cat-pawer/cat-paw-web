@@ -27,6 +27,10 @@ const CatPawInput: React.FC<{
         }
     };
 
+    const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (blurHandler) blurHandler(e);
+    };
+
     return (
         <div className="input-wrapper">
             <input
@@ -36,7 +40,7 @@ const CatPawInput: React.FC<{
                 disabled={disabled ?? false}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
-                onBlur={blurHandler}
+                onBlur={handleBlur}
             />
         </div>
     );

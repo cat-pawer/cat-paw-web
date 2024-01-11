@@ -20,6 +20,7 @@ export enum MessageType {
     REMOVE_SUMMARY = "REMOVE_SUMMARY",
     ADD_SCHEDULE = "ADD_SCHEDULE",
     REMOVE_SCHEDULE = "REMOVE_SCHEDULE",
+    LEAVE = "LEAVE"
 }
 
 export type MessageDto = {

@@ -16,6 +16,7 @@ const ScheduleBox: React.FC<{
 }> = ({ isNew, schedule, memberList }) => {
     const [scheduleTitle, setScheduleTitle] = useState("");
     const [newTitle, setNewTitle] = useState("");
+    const [removeList, setRemoveList] = useState<Array<number>>([]);
 
     const handleChangeScheduleTitle = (
         e: React.ChangeEvent<HTMLInputElement>,
@@ -36,6 +37,21 @@ const ScheduleBox: React.FC<{
             if (window.confirm("삭제하시겠습니가?")) {
                 getChatManager().removeSchedule(schedule.id);
             }
+        }
+    };
+
+    const doSummaryRemove = () => {
+        if (schedule) {
+            getChatManager().removeScheduleSummary(schedule.id, removeList);
+        }
+    };
+
+    const handleCheckbox = (summaryId: number) => {
+        console.log(removeList);
+        if (removeList.includes(summaryId)) {
+            setRemoveList([...removeList.filter((id) => id !== summaryId)]);
+        } else {
+            setRemoveList([...removeList, summaryId]);
         }
     };
 
@@ -75,7 +91,8 @@ const ScheduleBox: React.FC<{
             ) : (
                 <div className="title-wrapper">
                     <div className="title">{schedule?.title}</div>
-                    <button onClick={doScheduleRemove}>삭제</button>
+                    <button onClick={doScheduleRemove}>스케쥴 삭제</button>
+                    <button onClick={doSummaryRemove}>일정 삭제</button>
                     <button>추가</button>
                 </div>
             )}
@@ -103,9 +120,10 @@ const ScheduleBox: React.FC<{
                         : schedule?.scheduleSummaryDtoList.map((summary, i) => {
                               return (
                                   <ScheduleInput
-                                      key={i + "_" + new Date().getTime()}
+                                      key={i + "_" + summary.id}
                                       scheduleId={schedule.id}
                                       scheduleSummary={summary}
+                                      checkboxHandler={handleCheckbox}
                                       memberList={
                                           memberList ?? []
                                       }></ScheduleInput>

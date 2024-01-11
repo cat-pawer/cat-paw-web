@@ -11,17 +11,26 @@ const ScheduleInput: React.FC<{
     scheduleId: number;
     scheduleSummary: ScheduleSummary;
     memberList: Array<MemberInfo>;
-}> = ({ scheduleId, scheduleSummary, memberList }) => {
+    checkboxHandler?: (id: number) => void;
+}> = ({ scheduleId, scheduleSummary, memberList, checkboxHandler }) => {
     const [title, setTitle] = useState("");
+    const [isCheck, setIsCheck] = useState(false);
+
+    const handleChangeCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (checkboxHandler) checkboxHandler(scheduleSummary.id);
+        setIsCheck(!isCheck);
+    };
 
     const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
     };
 
     const doUpdateSummary = (e: React.ChangeEvent<HTMLInputElement>) => {
-        getChatManager().updateScheduleSummary(scheduleId,
+        getChatManager().updateScheduleSummary(
+            scheduleId,
             Object.assign({}, scheduleSummary, {
                 title,
+                // todo
                 cMemberId: scheduleSummary.cMemberId,
                 startDate: scheduleSummary.startDate,
                 endDate: scheduleSummary.endDate,
@@ -49,7 +58,11 @@ const ScheduleInput: React.FC<{
     return (
         <div className="schedule-input-wrapper">
             <div className="check-area center grid">
-                <input type="checkBox" />
+                <input
+                    type="checkbox"
+                    checked={isCheck}
+                    onChange={handleChangeCheckbox}
+                />
             </div>
             <div className="title-area center grid">
                 <CatPawInput

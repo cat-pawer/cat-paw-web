@@ -27,12 +27,14 @@ export interface SocketClientInterface extends EventTarget {
 export class SocketClinet extends EventTarget implements SocketClientInterface {
     private _client: Client | null;
     private _connected: boolean;
+    private _token: string | null;
     private _isDebug = true;
 
     constructor() {
         super();
         this._client = null;
         this._connected = false;
+        this._token = null;
     }
 
     init(): void {
@@ -45,7 +47,9 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
 
     doInit(groupId: number): void {
         if (this._client && this._connected) {
-            this._client.subscribe(`/topic/${groupId}`, this.handleUpdate, {});
+            this._client.subscribe(`/topic/${groupId}`, this.handleUpdate, {
+                Authorization: this._token,
+            });
 
             getChatManager().dispatchEvent(new Event(SOCKET_EVENT.INIT));
         }
@@ -57,18 +61,21 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
             timeout: 10000,
         });
         this._client = Stomp.over(ws);
-        const headers = {
-            token: getUserToken() ? getUserToken() : "",
-            passcode: getUserToken() ? getUserToken() : "",
-        };
-        if (this._isDebug) console.log("headers = ", headers);
-        this._client.connect(headers, this.handleConnect, this.handleError);
+        this._client.connect(
+            { token: getUserToken(), dest: getChatManager().getGroupId() },
+            this.handleConnect,
+            this.handleError,
+        );
     }
 
     private handleConnect(frame?: Frame): void {
-        if (this._isDebug) console.log("handleConnect", frame);
+        if (this._isDebug) console.warn("handleConnect", frame);
         this._connected = true;
-        getChatManager().dispatchEvent(new Event(SOCKET_EVENT.CONNECT));
+        if (frame) {
+            const header = frame.headers as any;
+            this._token = header["user-name"];
+            getChatManager().dispatchEvent(new Event(SOCKET_EVENT.CONNECT));
+        }
     }
 
     private handleError(error: Frame | string): void {
@@ -81,7 +88,9 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
             if (message && message.destination) {
                 this._client.send(
                     message.destination,
-                    message.headers ?? {},
+                    Object.assign({}, message.headers, {
+                        Authorization: this._token,
+                    }),
                     message.body ? JSON.stringify(message.body) : "",
                 );
             }
@@ -106,17 +115,14 @@ export class SocketClinet extends EventTarget implements SocketClientInterface {
 
     private handleDisconnect(): void {
         if (this._isDebug) console.log("disconnectss");
-        // this._socket?.deactivate();
         this._client = null;
         this._connected = false;
+        socketClient = undefined;
     }
 
     public release(): void {
         if (this._isDebug) console.log("release");
-        // this._socket?.deactivate();
-        this._client = null;
-        this._connected = false;
-        socketClient = undefined;
+        if (this._client) this._client.disconnect(this.handleDisconnect);
     }
     private getConnectionUrl(): string {
         const query = `token=${getUserToken() ? getUserToken() : ""}`;
