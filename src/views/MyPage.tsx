@@ -36,8 +36,8 @@ function MyPage() {
         const timeDiff = deadLineDay - today;
         const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
         if (dayDiff == 0) {
-            return "day";
-        } else return dayDiff;
+            return "-day";
+        } else return dayDiff > 0 ? `-${dayDiff}` : `+${Math.abs(dayDiff)}`;
     }
     const formedProjectList = projectList.map((project) => ({
         ...project,

@@ -16,6 +16,7 @@
 
             &-talk {
                 &-banner {
+                  margin-top: 10px;
                     font-size: 24px;
                     font-weight: normal;
                 }
@@ -87,10 +88,12 @@
                 margin: 0 5px 0 0;
                 height: 35px;
                 border-radius: 60px;
-                color: #c5c5c5;
                 border: 1px solid #c5c5c5;
                 background: #fff;
                 cursor: pointer;
+              span{
+                color: #c5c5c5;
+              }
             }
 
             .focus {
@@ -100,10 +103,12 @@
                 margin: 0 5px 0 0;
                 height: 35px;
                 border-radius: 60px;
-                color: #569fe1;
                 border: 1px solid #569fe1;
                 background: #fff;
                 cursor: pointer;
+              span{
+                color: #569fe1;
+              }
             }
         }
     }

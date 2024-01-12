@@ -251,6 +251,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
   &-btn{
     display: flex;
     position: relative;
@@ -273,6 +274,22 @@
     display: grid;
     justify-content: center;
     width: 960px;
+    &-previous{
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      .angleLeft{
+        width: 20px;
+        height: 20px;
+        color: #9c9c9c;
+      }
+      span{
+        margin-left: 6px;
+        margin-top: 2px;
+        font-size: 20px;
+        color: #9c9c9c;
+      }
+    }
   }
 
   &-section2 {
@@ -305,6 +322,7 @@
       }
       &-infoBtn{
         button{
+          cursor: pointer;
           padding: 11px 21px;
           width: 150px;
           height: 56px;
@@ -431,12 +449,12 @@
     }
 
     &-mainContent {
-      width: 960px;
+      width: 900px;
       margin: 10px 0 20px 0;
     }
 
     &-content {
-      width: 960px;
+      width: 900px;
       margin: 10px 0 50px 0;
 
       span {

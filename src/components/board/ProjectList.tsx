@@ -25,7 +25,7 @@ const ProjectList: React.FC<{
                     {isDead && (
                         <div className="project-list-section-card-project-dead">
                             <span>🚨</span>
-                            <span>D-3</span>
+                            <span>D{info.deadLine}</span>
                         </div>
                     )}
                 </div>

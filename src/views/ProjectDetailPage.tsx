@@ -7,6 +7,10 @@ import GoBackBtn from "../components/common/GoBackBtn";
 
 function ProjectDetailPage() {
     const navigate = useNavigate();
+
+    const titleList = [
+        '프로젝트 소개','프로젝트 진행방향','필요 및 담당 분야','자격 요건','우대 사항', '우대 사항'
+    ]
     const List = [
         {
             intro:

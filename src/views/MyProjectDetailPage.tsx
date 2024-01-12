@@ -1,13 +1,29 @@
 import React from "react";
 import GoBackBtn from "../components/common/GoBackBtn";
+import NoticeList from "../components/board/NoticeList";
+import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useNavigate} from "react-router-dom";
+import ScheduleList from "../components/schedule/ScheduleList";
+import NoticePut from "../components/board/NoticePut";
 
 function MyProjectDetailPage() {
+    const navigate = useNavigate();
+
+    const goMyPage = () => {
+        navigate(-1);
+    };
+
     return (
         <div className="detail">
             <GoBackBtn />
             <div className="detail-section">
-                <div>
-                    <span>◁ 마이페이지</span>
+                <div className="detail-section-previous" onClick={goMyPage}>
+                    <FontAwesomeIcon
+                        icon={faAngleLeft}
+                        className="angleLeft"
+                    />
+                    <span>마이페이지</span>
                 </div>
                 <div className="detail-info">
                     <div className="detail-info-flex">
@@ -42,7 +58,7 @@ function MyProjectDetailPage() {
                         </div>
                     </div>
                     <div className="my-job-management-chart">
-                        <div></div>
+
                     </div>
                 </div>
                 <div className="my-job-enter">
@@ -75,7 +91,7 @@ function MyProjectDetailPage() {
                     </div>
                 </div>
             </div>
-            <div>
+            <div className="my-notice">
                 <div className="my-page-section-career-flex">
                     <div className="my-page-section-info-card-flex-flex-title">
                         <span>공지사항</span>
@@ -84,6 +100,8 @@ function MyProjectDetailPage() {
                         <span>추가</span>
                     </div>
                 </div>
+                <NoticeList />
+                <NoticePut />
             </div>
         </div>
     );

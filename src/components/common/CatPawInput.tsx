@@ -41,6 +41,7 @@ const CatPawInput: React.FC<{
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
                 onBlur={handleBlur}
+                placeholder="일감을 추가하세요"
             />
         </div>
     );

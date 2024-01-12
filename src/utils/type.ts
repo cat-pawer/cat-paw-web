@@ -33,6 +33,7 @@ export type MessageDto = {
 };
 
 export interface InfoType {
+    deadLine: string;
     recruitType: string;
     recruitPeriod: string;
     title: string;
