@@ -31,7 +31,7 @@ const ScheduleInput: React.FC<{
             Object.assign({}, scheduleSummary, {
                 title,
                 // todo
-                cMemberId: scheduleSummary.cMemberId,
+                cMemberId: scheduleSummary.cMemberId, //여기 값들 바꿔서 호출
                 startDate: scheduleSummary.startDate,
                 endDate: scheduleSummary.endDate,
                 status: scheduleSummary.status,

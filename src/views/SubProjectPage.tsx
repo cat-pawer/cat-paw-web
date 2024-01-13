@@ -78,7 +78,6 @@ function SubProjectPage() {
         );
         if (resDead) {
             if (resDead.status === 200) {
-                console.log("resDead", resDead.data.data.content);
                 //디데이계산
                 function calculateDDay(recruitPeriod: any) {
                     const today: any = new Date();
@@ -94,13 +93,13 @@ function SubProjectPage() {
                     deadLine: calculateDDay(info.recruitPeriod),
                 }));
 
-                console.log("form",formedProjectList)
+                // console.log("formDead",formedProjectList)
                 setDeadLineList(formedProjectList)
             }
         }
         if (resNew) {
             if (resNew.status === 200) {
-                console.log("resNew:", resNew.data.data.content);
+                // console.log("resNew:", resNew.data.data.content);
                 setIsNewList(resNew.data.data.content);
             }
         }

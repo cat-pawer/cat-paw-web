@@ -25,13 +25,13 @@ const ScheduleList: React.FC = () => {
     };
 
     useEffect(() => {
-        getChatManager().init(1);
+        getChatManager().init(1); //id값 뽑아서 넣기 달력페이지 마운트하기
         getChatManager().addEventListener(
-            CHAT_EVENT.INIT_COMPLETE,
+            CHAT_EVENT.INIT_COMPLETE, //다 호출
             handleInitComplete,
         );
         getChatManager().addEventListener(
-            CHAT_EVENT.UPDATE,
+            CHAT_EVENT.UPDATE, //순서될때마다 호출
             handleScheduleUpdate,
         );
         return () => {
