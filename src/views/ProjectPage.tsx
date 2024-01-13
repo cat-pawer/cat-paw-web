@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {apiGetClient} from "src/utils/api";
+import { apiGetClient } from "src/utils/api";
 
 function ProjectPage() {
     const navigate = useNavigate();
@@ -91,14 +91,14 @@ function ProjectPage() {
         },
     ];
 
-    const searchProject = async () =>{
+    const searchProject = async () => {
         const res = await apiGetClient(
             "/recruit/summary/search?recruitPeriod=default&isPage=false&page=0&size=5&sort=string",
         );
-        if(res){
-            console.log(res)
+        if (res) {
+            console.log(res);
         }
-    }
+    };
     useEffect(() => {
         searchProject().then((r) => null);
     }, []);

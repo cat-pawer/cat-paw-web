@@ -1,9 +1,9 @@
 import React from "react";
 import GoBackBtn from "../components/common/GoBackBtn";
 import NoticeList from "../components/board/NoticeList";
-import {faAngleLeft} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useNavigate} from "react-router-dom";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 import ScheduleList from "../components/schedule/ScheduleList";
 import NoticePut from "../components/board/NoticePut";
 
@@ -18,11 +18,14 @@ function MyProjectDetailPage() {
         <div className="detail">
             <GoBackBtn />
             <div className="detail-section">
-                <div className="detail-section-previous" onClick={goMyPage}>
-                    <FontAwesomeIcon
-                        icon={faAngleLeft}
-                        className="angleLeft"
-                    />
+                <div
+                    className="detail-section-previous"
+                    onClick={goMyPage}
+                    role="presentation"
+                    onKeyPress={() => {
+                        return;
+                    }}>
+                    <FontAwesomeIcon icon={faAngleLeft} className="angleLeft" />
                     <span>마이페이지</span>
                 </div>
                 <div className="detail-info">
@@ -57,9 +60,7 @@ function MyProjectDetailPage() {
                             <span>추가</span>
                         </div>
                     </div>
-                    <div className="my-job-management-chart">
-
-                    </div>
+                    <div className="my-job-management-chart"></div>
                 </div>
                 <div className="my-job-enter">
                     <div className="my-page-section-career-flex">

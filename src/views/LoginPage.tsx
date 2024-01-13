@@ -42,7 +42,7 @@ function LoginPage() {
 
     const openLoginPopup = (provider: OauthProvider) => {
         window.open(
-            `${CONSTANTS.API_SERVER}oauth/authorization/${provider.valueOf()}`,
+            `${CONSTANTS.API_SERVER}/oauth/authorization/${provider.valueOf()}`,
             "_blank",
             getPopupOptions(700, 600),
         );

@@ -79,22 +79,27 @@ function SubProjectPage() {
         if (resDead) {
             if (resDead.status === 200) {
                 //디데이계산
-                function calculateDDay(recruitPeriod: any) {
+                const calculateDDay = (recruitPeriod: any) => {
                     const today: any = new Date();
                     const deadLineDay: any = new Date(recruitPeriod);
                     const timeDiff = deadLineDay - today;
                     const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
                     if (dayDiff == 0) {
                         return "-day";
-                    } else return dayDiff > 0 ? `-${dayDiff}` : `+${Math.abs(dayDiff)}`;
-                }
-                const formedProjectList:any = resDead.data.data.content.map((info: any) => ({
-                    ...info,
-                    deadLine: calculateDDay(info.recruitPeriod),
-                }));
+                    } else
+                        return dayDiff > 0
+                            ? `-${dayDiff}`
+                            : `+${Math.abs(dayDiff)}`;
+                };
+                const formedProjectList: any = resDead.data.data.content.map(
+                    (info: any) => ({
+                        ...info,
+                        deadLine: calculateDDay(info.recruitPeriod),
+                    }),
+                );
 
                 // console.log("formDead",formedProjectList)
-                setDeadLineList(formedProjectList)
+                setDeadLineList(formedProjectList);
             }
         }
         if (resNew) {
@@ -103,9 +108,7 @@ function SubProjectPage() {
                 setIsNewList(resNew.data.data.content);
             }
         }
-
     };
-
 
     useEffect(() => {
         topicProject().then((r) => null);
