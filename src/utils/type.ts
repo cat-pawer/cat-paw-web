@@ -37,7 +37,7 @@ export interface InfoType {
     recruitType: string;
     recruitPeriod: string;
     title: string;
-    hashTag: string;
+    hashList: string[];
     viewCount: number;
     commentCount: number;
     language: string;

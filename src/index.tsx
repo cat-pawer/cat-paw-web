@@ -23,10 +23,6 @@ const router = createBrowserRouter([
         element: <MainPage />,
     },
     {
-        path: "/subProject",
-        element: <SubProjectPage />,
-    },
-    {
         path: "/projectDetail/:index",
         element: <ProjectDetailPage />,
     },

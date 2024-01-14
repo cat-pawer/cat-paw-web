@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import MyProjectList from "../components/board/MyProjectList";
 import GoBackBtn from "../components/common/GoBackBtn";
+import {calculateDDay} from "../utils/DateUtil";
 
 type categoryType = {
     JOIN?: string;
@@ -30,15 +31,7 @@ function MyPage() {
             deadLine: "2024.01.20",
         },
     ];
-    function calculateDDay(deadline: any) {
-        const today: any = new Date();
-        const deadLineDay: any = new Date(deadline);
-        const timeDiff = deadLineDay - today;
-        const dayDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-        if (dayDiff == 0) {
-            return "-day";
-        } else return dayDiff > 0 ? `-${dayDiff}` : `+${Math.abs(dayDiff)}`;
-    }
+
     const formedProjectList = projectList.map((project) => ({
         ...project,
         deadLine: calculateDDay(project.deadLine),

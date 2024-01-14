@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
@@ -6,11 +6,13 @@ import sampleImg from "../public/images/mainImg.png";
 import starImg from "../public/images/starImg.png";
 import SubProjectPage from "./SubProjectPage";
 import ProjectPage from "./ProjectPage";
+import {apiGetClient} from "src/utils/api";
+import {calculateDDay, formatDate} from "../utils/DateUtil";
 
 const searchList: { value: string; label: string }[] = [
-    { value: "ALL", label: "전체" },
-    { value: "PROJECT", label: "프로젝트" },
-    { value: "STUDY", label: "스터디" },
+    { value: "", label: "전체" },
+    { value: "project", label: "프로젝트" },
+    { value: "study", label: "스터디" },
 ];
 
 function MainPage() {
@@ -21,13 +23,12 @@ function MainPage() {
         { FRONT: "프론트엔드" },
         { WEB: "웹" },
     ];
-
+    const [deadLineList, setDeadLineList] = useState<any[]>([]);
+    const [isNewList, setIsNewList] = useState<any[]>([]);
     const [categoryFocus, setCategoryFocus] = useState<string[]>([]);
-    const [selectOption, setSelectChange] = useState<any>("");
-
-    const handleSelect = (e: any) => {
-        setSelectChange(e.target.value);
-    };
+    const [selectOption, setSelectOption] = useState<any>("");
+    const [searchProjectList, setSearchProjectList] = useState<any[]>([]);
+    const [searchValue, setSearchValue] = useState("")
 
     const categoryHandle = (clickCategory: string) => {
         //클릭 요소가 포함되어있는 경우
@@ -40,6 +41,83 @@ function MainPage() {
             setCategoryFocus([...categoryFocus, clickCategory]);
         }
     };
+    const topicProject = async () => {
+        const resDead = await apiGetClient(
+            "/recruit/summary/topics?topic=deadLine&isPage=false&page=0&size=9&sort=created",
+        );
+        const resNew = await apiGetClient(
+            "/recruit/summary/topics?topic=isNew&isPage=false&page=0&size=9&sort=created",
+        );
+        if (resDead) {
+            if (resDead.status === 200) {
+                const formedProjectList: any = resDead.data.data.content.map(
+                    (info: any) => ({
+                        ...info,
+                        deadLine: calculateDDay(info.recruitPeriod), recruitPeriod: formatDate(info.recruitPeriod)
+                    }),
+                );
+
+                // console.log("formDead",formedProjectList)
+                setDeadLineList(formedProjectList);
+            }
+        }
+        if (resNew) {
+            if (resNew.status === 200) {
+                // console.log("resNew:", resNew.data.data.content);
+                const formedProjectList: any = resDead.data.data.content.map(
+                    (info: any) => ({
+                        ...info,
+                        deadLine: calculateDDay(info.recruitPeriod), recruitPeriod: formatDate(info.recruitPeriod)
+                    }),
+                );
+                setIsNewList(formedProjectList);
+            }
+        }
+    };
+    const searchProject = async (searchValue:string, recruitType:string) => {
+        try {
+            let apiUrl = `/recruit/summary/search?isPage=false&page=0&size=9&sort=created`
+            if (recruitType !== "") {
+                apiUrl += `&recruitType=${recruitType}`;
+            }
+            if (searchValue !== "" ) {
+                apiUrl += `&searchValue=${searchValue}`;
+            }
+
+            const res = await apiGetClient(
+                apiUrl,
+            );
+            if (res.status === 200) {
+                const formedProjectList: any = res.data.data.content.map((info:any)=>(
+                    {
+                        ...info, deadLine: calculateDDay(info.recruitPeriod), recruitPeriod: formatDate(info.recruitPeriod)
+                    }
+                ))
+                setSearchProjectList(formedProjectList);
+            }
+        }catch (error) {
+                console.log(error);
+            }
+    }
+    const handleTypeChange = (e: any) => {
+        setSelectOption(e.target.value);
+        searchProject(searchValue,e.target.value)
+    };
+    const handleInputChange = (e:any) => {
+        setSearchValue(e.target.value);
+    }
+    const handleEnterEvent = (e:any) => {
+        if(e.key === "Enter"){
+            searchProject(searchValue,selectOption);
+        }
+    }
+    const clickSearch = () =>{
+        searchProject(searchValue,selectOption);
+    }
+    useEffect(() => {
+        searchProject(searchValue,selectOption)
+        topicProject().then((r) => null);
+    }, []);
 
     return (
         <div>
@@ -62,7 +140,7 @@ function MainPage() {
                             <div className="main-section-title-search-select">
                                 <select
                                     value={selectOption}
-                                    onChange={handleSelect}>
+                                    onChange={handleTypeChange}>
                                     {searchList.map((item, index) => {
                                         return (
                                             <option
@@ -75,14 +153,18 @@ function MainPage() {
                                     })}
                                 </select>
                             </div>
-                            <FontAwesomeIcon
-                                icon={faMagnifyingGlass}
-                                className="glass"
-                            />
                             <input
+                                onChange={handleInputChange}
+                                onKeyDown={handleEnterEvent}
                                 className="search-input"
                                 type="text"
                                 placeholder=""
+                            />
+                            <FontAwesomeIcon
+                                onClick={clickSearch}
+                                role="presentation"
+                                icon={faMagnifyingGlass}
+                                className="glass"
                             />
                         </div>
                     </div>
@@ -110,8 +192,8 @@ function MainPage() {
                     <img alt="메인 사진" src={sampleImg} />
                 </div>
             </div>
-            <SubProjectPage />
-            <ProjectPage />
+            <SubProjectPage isNewList={isNewList} deadLineList={deadLineList}  />
+            <ProjectPage searchProjectList={searchProjectList} />
         </div>
     );
 }

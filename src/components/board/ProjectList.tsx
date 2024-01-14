@@ -15,7 +15,7 @@ const ProjectList: React.FC<{
                 onClick={() => navigate("/projectDetail/" + index)}
                 role="none">
                 <div className="project-list-section-card-project">
-                    <div className="project-list-section-card-project-division">
+                    <div className="project-list-section-card-project-recruitType">
                         <span>
                             {info.recruitType === "PROJECT"
                                 ? "📓프로젝트"
@@ -33,14 +33,16 @@ const ProjectList: React.FC<{
                     <span>{info.title}</span>
                 </div>
                 <div className="project-list-section-card-tag">
-                    <span>태그</span>
+                    {info.hashList.map((item:any,itemIndex:number)=>(
+                        <span key={itemIndex}>#{item.name}</span>
+                    ))}
                 </div>
                 <div className="project-list-section-card-info">
                     <div className="project-list-section-card-info-day">
                         <span>마감일 </span>
                         <span>{info.recruitPeriod}</span>
                     </div>
-                    <div className="project-list-section-card-info-hits">
+                    <div className="project-list-section-card-info-viewCount">
                         <span>조회수 </span>
                         <span>{info.viewCount}</span>
                     </div>
