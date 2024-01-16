@@ -8,6 +8,7 @@ import SubProjectPage from "./SubProjectPage";
 import ProjectPage from "./ProjectPage";
 import {apiGetClient} from "src/utils/api";
 import {calculateDDay, formatDate} from "../utils/DateUtil";
+import {useNavigate} from "react-router-dom";
 
 const searchList: { value: string; label: string }[] = [
     { value: "", label: "전체" },
@@ -16,6 +17,8 @@ const searchList: { value: string; label: string }[] = [
 ];
 
 function MainPage() {
+    const navigate = useNavigate();
+
     const mainCategoryList = [
         { PLAN: "기획" },
         { DESIGN: "디자이너" },
@@ -57,7 +60,6 @@ function MainPage() {
                     }),
                 );
 
-                // console.log("formDead",formedProjectList)
                 setDeadLineList(formedProjectList);
             }
         }
@@ -101,23 +103,30 @@ function MainPage() {
     }
     const handleTypeChange = (e: any) => {
         setSelectOption(e.target.value);
-        searchProject(searchValue,e.target.value)
+        searchProject(searchValue,e.target.value).then(r => null);
     };
     const handleInputChange = (e:any) => {
         setSearchValue(e.target.value);
     }
     const handleEnterEvent = (e:any) => {
         if(e.key === "Enter"){
-            searchProject(searchValue,selectOption);
+            searchProject(searchValue, selectOption).then(r => null);
         }
     }
     const clickSearch = () =>{
-        searchProject(searchValue,selectOption);
+        searchProject(searchValue, selectOption).then(r => null);
+    }
+    const handleReload = () => {
+        window.location.reload();
     }
     useEffect(() => {
-        searchProject(searchValue,selectOption)
+        searchProject(searchValue, selectOption).then(r => null);
         topicProject().then((r) => null);
     }, []);
+
+    useEffect(()=>{
+        console.log("list",searchProjectList);
+    },[searchProjectList])
 
     return (
         <div>
@@ -127,7 +136,7 @@ function MainPage() {
                         <div className="main-section-title-star">
                             <img alt="star img" src={starImg} />
                         </div>
-                        <div className="main-section-title-talk">
+                        <div className="main-section-title-talk" onClick={handleReload} role="presentation">
                             <span>프로젝트를</span>
                             <br />
                             <span>만나볼 준비 되었나요?</span>

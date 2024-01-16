@@ -1,12 +1,17 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import sample1 from "../public/images/sample1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import GoBackBtn from "../components/common/GoBackBtn";
+import {apiGetClient} from "src/utils/api";
+import {calculateDDay, formatDate} from "src/utils/DateUtil";
+import {InfoType} from "@/utils/type";
 
 function ProjectDetailPage() {
-    const navigate = useNavigate();
+    const {state} = useLocation();
+    const projectId = state?.projectId;
+    const [detailData, setDetailData] = useState<InfoType>();
 
     const titleList = [
         "프로젝트 소개",
@@ -65,36 +70,62 @@ function ProjectDetailPage() {
         },
     ];
 
+    const projectDetail = async() =>{
+        const res = await apiGetClient(`recruit/detail/${projectId}`)
+        if (res){
+            if(res.status === 200){
+                const formedDetailData: any = {
+                    ...res.data.data,
+                    deadLine: calculateDDay(res.data.data.recruitPeriod),
+                    updated: formatDate(res.data.data.updated),
+                    recruitPeriod: formatDate(res.data.data.recruitPeriod),
+                };
+                setDetailData(formedDetailData);
+            }
+        }
+    }
+
     const handleEnterEvent = (e: any) => {
         if (e.key === "Enter") {
             console.log("등록");
         }
     };
+
+    useEffect(()=>{
+        projectDetail().then(r => null);
+    }, [projectId]);
+    //데이터를 가져온후, 상태 업데이트 , 업데이트된 상태 로그
+    useEffect(() => {
+        console.log(detailData);
+    }, [detailData]);
     return (
-        <div className="detail">
+        <div>
+            {detailData && (
+            <div className="detail">
             <GoBackBtn />
             <div className="detail-section">
                 <div className="detail-info">
-                    <div className="detail-info-tag">
-                        <span>#프론트 #백 #개발자</span>
+                    <div className="detail-info-tag" >
+                        {detailData.tagList.map((item,itemIndex)=>(
+                                <span key={itemIndex}>#{item.name} </span>
+                        ))}
                     </div>
                     <div className="detail-info-title">
                         <span>
-                            [프론트/백개발자] 함께 000 프로젝트 성실하게
-                            임하실분 구해요.
+                            {detailData.title}
                         </span>
                     </div>
                     <div className="detail-info-nickname">
-                        <span>김인국바보</span>
+                        <span>{detailData.id}</span>
                     </div>
                     <div className="detail-info-set">
                         <div className="detail-info-set-regi">
                             <span>등록일 </span>
-                            <span>23.10.01</span>
+                            <span>{detailData.updated}</span>
                         </div>
                         <div className="detail-info-set-hits">
                             <span>조회수 </span>
-                            <span>24</span>
+                            <span>{detailData.viewCount}</span>
                         </div>
                     </div>
                 </div>
@@ -106,7 +137,7 @@ function ProjectDetailPage() {
                                     마감 날짜
                                 </span>
                                 <span className="detail-data-elInfo">
-                                    23.10.11
+                                    {detailData.recruitPeriod}
                                 </span>
                             </div>
                             <div className="detail-data-top-element">
@@ -121,7 +152,7 @@ function ProjectDetailPage() {
                                 <span className="detail-data-element">
                                     모집 인원
                                 </span>
-                                <span className="detail-data-elInfo">6명</span>
+                                <span className="detail-data-elInfo">{detailData.peopleNumber}명</span>
                             </div>
                         </div>
                         <div className="detail-data-top-right">
@@ -130,7 +161,7 @@ function ProjectDetailPage() {
                                     예상 기간
                                 </span>
                                 <span className="detail-data-elInfo">
-                                    4개월
+                                    {detailData.expectDuration}개월
                                 </span>
                             </div>
                             <div className="detail-data-top-element">
@@ -138,7 +169,7 @@ function ProjectDetailPage() {
                                     진행 방식
                                 </span>
                                 <span className="detail-data-elInfo">
-                                    온라인
+                                    {detailData.onlineType === "ONLINE" ? "온라인" : "오프라인"}
                                 </span>
                             </div>
                             <div className="detail-data-top-element">
@@ -158,14 +189,12 @@ function ProjectDetailPage() {
                             </span>
                         </div>
                         <div className="detail-data-bottom-language">
-                            <div className="detail-data-bottom-language-list">
-                                <span className="detail-langIcon">●</span>
-                                <span>JavaScript</span>
-                            </div>
-                            <div className="detail-data-bottom-language-list">
-                                <span className="detail-langIcon">●</span>
-                                <span>TypeScript</span>
-                            </div>
+                            {detailData.techList.map((item,itemIndex) => (
+                                <div className="detail-data-bottom-language-list" key={itemIndex}>
+                                    <span className="detail-langIcon">●</span>
+                                    <span>{item.name}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -248,6 +277,8 @@ function ProjectDetailPage() {
                     ))}
                 </div>
             </div>
+        </div>
+            )}
         </div>
     );
 }

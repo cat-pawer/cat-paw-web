@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 const ProjectPage: React.FC<{searchProjectList: any[]}> = ({searchProjectList}) => {
     const navigate = useNavigate();
 
-    useEffect(() => {
+    const handleCardClick = (id: string) => {
+        navigate(`/projectDetail/${id}`,{state: {projectId: id}}); //파라미터 함께 전달
+    }
 
-    }, [searchProjectList]);
     return (
         <div className="whole-project">
             <div className={searchProjectList.length === 0 ? "project-none" : "project-title"}>
@@ -19,7 +20,8 @@ const ProjectPage: React.FC<{searchProjectList: any[]}> = ({searchProjectList}) 
                         <div
                             className="whole-project-list-card"
                             key={index}
-                            onClick={() => navigate("/projectDetail/" + index)}
+                            id={info.id}
+                            onClick={()=>handleCardClick(info.id)}
                             role="none">
                             <div className="project-list-section-card-project">
                                 <div className="project-list-section-card-project-recruitType">

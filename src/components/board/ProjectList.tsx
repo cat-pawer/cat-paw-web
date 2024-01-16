@@ -8,12 +8,16 @@ const ProjectList: React.FC<{
     index: number;
 }> = ({ info, isDead, index }) => {
     const navigate = useNavigate();
+    const handleCardClick = (id: string) => {
+        navigate(`/projectDetail/${id}`,{state: {projectId: id}}); //파라미터 함께 전달
+    }
+
     return (
         <div className="project-list-section">
             <div
                 className="project-list-section-card"
-                onClick={() => navigate("/projectDetail/" + index)}
-                role="none">
+                onClick={() => handleCardClick(info.id)}
+                role="presentation">
                 <div className="project-list-section-card-project">
                     <div className="project-list-section-card-project-recruitType">
                         <span>

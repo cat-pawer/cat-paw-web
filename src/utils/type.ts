@@ -37,10 +37,22 @@ export interface InfoType {
     recruitType: string;
     recruitPeriod: string;
     title: string;
-    hashList: string[];
+    hashList: any[];
     viewCount: number;
     commentCount: number;
     language: string;
+    id: any;
+    content: string;
+    updated: string;
+    onlineType: string;
+    state: string;
+    tagList: any[];
+    techList: any[];
+    peopleNumber: number;
+    positionList: string[];
+    groupType: string;
+    contact: string;
+    expectDuration: number;
 }
 export interface projectInfoType {
     deadLine: any;
