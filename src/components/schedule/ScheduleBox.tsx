@@ -29,12 +29,13 @@ const ScheduleBox: React.FC<{
     };
 
     const doScheduleSave = () => {
+        setNewTitle("");
         getChatManager().addSchedule(scheduleTitle);
     };
 
     const doScheduleRemove = () => {
         if (schedule) {
-            if (window.confirm("삭제하시겠습니가?")) {
+            if (window.confirm("삭제하시겠습니까?")) {
                 getChatManager().removeSchedule(schedule.id);
             }
         }
@@ -84,6 +85,7 @@ const ScheduleBox: React.FC<{
             {isNew ? (
                 <div className="title-wrapper">
                     <CatPawInput
+                        isNew={true}
                         value={scheduleTitle ?? "보드 이름을 입력해주세요"}
                         changeHandler={handleChangeScheduleTitle}></CatPawInput>
                     <button onClick={doScheduleSave}>저장하기</button>
@@ -131,10 +133,11 @@ const ScheduleBox: React.FC<{
                           })}
                     <div className="default-input-wrapper">
                         <div className="check-area center grid">
-                            <CatPawInput type="checkbox" value="false" />
+                            <CatPawInput isNew={false} type="checkbox" value="false" />
                         </div>
                         <div className="title-area center grid">
                             <CatPawInput
+                                isNew={false}
                                 value={newTitle}
                                 changeHandler={handleChangeTitle}
                                 enterHandler={handleEnterTitle}

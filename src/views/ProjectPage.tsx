@@ -22,7 +22,7 @@ const ProjectPage: React.FC<{searchProjectList: any[]}> = ({searchProjectList}) 
                             key={index}
                             id={info.id}
                             onClick={()=>handleCardClick(info.id)}
-                            role="none">
+                            role="presentation">
                             <div className="project-list-section-card-project">
                                 <div className="project-list-section-card-project-recruitType">
                                     <span>{info.recruitType === "PROJECT"

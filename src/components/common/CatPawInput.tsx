@@ -1,6 +1,7 @@
 import React from "react";
 
 const CatPawInput: React.FC<{
+    isNew?:boolean;
     value: string | number;
     type?: string;
     readonly?: boolean;
@@ -9,6 +10,7 @@ const CatPawInput: React.FC<{
     enterHandler?: () => void;
     blurHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }> = ({
+    isNew,
     value,
     type,
     readonly,
@@ -34,6 +36,7 @@ const CatPawInput: React.FC<{
     return (
         <div className="input-wrapper">
             <input
+                className={isNew ? "board" : "content"}
                 value={value}
                 type={type}
                 readOnly={readonly ?? false}
@@ -41,7 +44,7 @@ const CatPawInput: React.FC<{
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
                 onBlur={handleBlur}
-                placeholder="일감을 추가하세요"
+                placeholder={isNew ? "보드 이름을 입력하세요" : "일감을 추가하세요"}
             />
         </div>
     );

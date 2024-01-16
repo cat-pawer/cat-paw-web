@@ -63,6 +63,7 @@ function MyProjectDetailPage() {
                     <div className="my-job-management-chart"></div>
                 </div>
                 <div className="my-job-enter">
+                    <ScheduleList></ScheduleList>
                     <div className="my-page-section-career-flex">
                         <div className="my-job-enter-title">
                             <span>보드 이름을 입력하세요</span>
