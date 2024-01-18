@@ -100,6 +100,9 @@ function LoginPage() {
             <button onClick={() => openLoginPopup(OauthProvider.NAVER)}>
                 네이버 로그인
             </button>
+            <a href={`${CONSTANTS.API_SERVER}/oauth/authorization/google`}>
+                구글 태그
+            </a>
         </div>
     );
 }

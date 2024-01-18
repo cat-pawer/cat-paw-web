@@ -9,8 +9,8 @@ const ProjectList: React.FC<{
 }> = ({ info, isDead, index }) => {
     const navigate = useNavigate();
     const handleCardClick = (id: string) => {
-        navigate(`/projectDetail/${id}`,{state: {projectId: id}}); //파라미터 함께 전달
-    }
+        navigate(`/projectDetail/${id}`, { state: { projectId: id } }); //파라미터 함께 전달
+    };
 
     return (
         <div className="project-list-section">
@@ -37,7 +37,7 @@ const ProjectList: React.FC<{
                     <span>{info.title}</span>
                 </div>
                 <div className="project-list-section-card-tag">
-                    {info.hashList.map((item:any,itemIndex:number)=>(
+                    {info.hashList.map((item: any, itemIndex: number) => (
                         <span key={itemIndex}>#{item.name}</span>
                     ))}
                 </div>

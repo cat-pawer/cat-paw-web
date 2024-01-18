@@ -6,11 +6,11 @@ type TopicsType = {
     DEAD?: string;
 };
 
-const SubProjectPage: React.FC<{ isNewList: any[], deadLineList: any[] }> = ({isNewList, deadLineList}) => {
+const SubProjectPage: React.FC<{ isNewList: any[]; deadLineList: any[] }> = ({
+    isNewList,
+    deadLineList,
+}) => {
     const topics: TopicsType[] = [{ NEW: "신상" }, { DEAD: "마감" }];
-
-    useEffect(() => {
-    }, []);
 
     return (
         <div
@@ -63,6 +63,6 @@ const SubProjectPage: React.FC<{ isNewList: any[], deadLineList: any[] }> = ({is
             ))}
         </div>
     );
-}
+};
 
 export default SubProjectPage;

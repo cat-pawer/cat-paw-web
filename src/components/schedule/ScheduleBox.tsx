@@ -133,7 +133,11 @@ const ScheduleBox: React.FC<{
                           })}
                     <div className="default-input-wrapper">
                         <div className="check-area center grid">
-                            <CatPawInput isNew={false} type="checkbox" value="false" />
+                            <CatPawInput
+                                isNew={false}
+                                type="checkbox"
+                                value="false"
+                            />
                         </div>
                         <div className="title-area center grid">
                             <CatPawInput

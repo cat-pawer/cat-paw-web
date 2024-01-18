@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import MyProjectList from "../components/board/MyProjectList";
 import GoBackBtn from "../components/common/GoBackBtn";
-import {calculateDDay} from "../utils/DateUtil";
+import { calculateDDay } from "../utils/DateUtil";
 
 type categoryType = {
     JOIN?: string;
