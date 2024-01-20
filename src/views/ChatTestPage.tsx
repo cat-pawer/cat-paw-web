@@ -24,7 +24,7 @@ function ChatTestPage() {
     const memberList = getChatManager().getMemberList();
 
     const handleClick = (id: string) => {
-        apiGetClient(`http://localhost:8080/api/v1/member/token/${id}`)
+        apiGetClient(`/member/token/${id}`)
             .then((res) => {
                 const token = res.data.data;
                 saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, token);

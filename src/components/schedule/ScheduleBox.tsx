@@ -29,8 +29,8 @@ const ScheduleBox: React.FC<{
     };
 
     const doScheduleSave = () => {
-        setNewTitle("");
         getChatManager().addSchedule(scheduleTitle);
+        setScheduleTitle("");
     };
 
     const doScheduleRemove = () => {
@@ -88,14 +88,16 @@ const ScheduleBox: React.FC<{
                         isNew={true}
                         value={scheduleTitle ?? "보드 이름을 입력해주세요"}
                         changeHandler={handleChangeScheduleTitle}></CatPawInput>
-                    <button onClick={doScheduleSave}>저장하기</button>
+                    <button className="saveBtn" onClick={doScheduleSave}>저장하기</button>
                 </div>
             ) : (
                 <div className="title-wrapper">
                     <div className="title">{schedule?.title}</div>
-                    <button onClick={doScheduleRemove}>스케쥴 삭제</button>
+                    <div className="btn-wrapper">
+                    <button onClick={doScheduleRemove}>보드 삭제</button>
                     <button onClick={doSummaryRemove}>일정 삭제</button>
                     <button>추가</button>
+                    </div>
                 </div>
             )}
             <div className="schedule-box">

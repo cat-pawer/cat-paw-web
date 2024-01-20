@@ -24,7 +24,7 @@ const MyProjectList: React.FC<{ info: projectInfoType; index: number }> = ({
                         className={
                             (info.deadLine < 11 &&
                                 info.deadLine.startsWith("-")) ||
-                            info.deadLine == "day"
+                            info.deadLine == "-day"
                                 ? "deadLine"
                                 : "my-page-section-info-card-content-dead"
                         }>

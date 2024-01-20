@@ -64,17 +64,7 @@ function MyProjectDetailPage() {
                 </div>
                 <div className="my-job-enter">
                     <ScheduleList></ScheduleList>
-                    <div className="my-page-section-career-flex">
-                        <div className="my-job-enter-title">
-                            <span>보드 이름을 입력하세요</span>
-                        </div>
-                        <div className="my-page-section-career-flex-more">
-                            <span>저장하기</span>
-                        </div>
-                    </div>
-                    <div className="my-job-enter-chart">
-                        <div></div>
-                    </div>
+
                 </div>
             </div>
             <div className="detail-section2">

@@ -5,6 +5,7 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import MyProjectList from "../components/board/MyProjectList";
 import GoBackBtn from "../components/common/GoBackBtn";
 import { calculateDDay } from "../utils/DateUtil";
+import { apiGetClient } from "../utils/api";
 
 type categoryType = {
     JOIN?: string;
@@ -37,6 +38,17 @@ function MyPage() {
         deadLine: calculateDDay(project.deadLine),
     }));
 
+    const myProject = async () => {
+        const res = await  apiGetClient("/groups/summary?mine=true&page=0&size=5&sort=string");
+        if(res) {
+            if(res.status === 200){
+                console.log(res);
+            }
+        }
+    }
+    useEffect(()=>{
+        myProject().then((r)=>null);
+    })
     return (
         <div className="my">
             <GoBackBtn />
