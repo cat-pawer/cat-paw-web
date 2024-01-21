@@ -15,7 +15,9 @@
             }
 
             &-talk {
+              cursor: pointer;
                 &-banner {
+                  margin-top: 10px;
                     font-size: 24px;
                     font-weight: normal;
                 }
@@ -39,11 +41,12 @@
                     align-items: center;
 
                     select{
+                      outline: none;
                       border: none;
                       height: 90%;
                       border-radius: 28px;
                       text-align: center;
-                      width: 120px;
+                      width: 140px;
                       cursor: pointer;
                       color: #2583DA;
                       font-size: 20px;
@@ -57,7 +60,7 @@
                     border-radius: 46px;
                     border: 2px solid #569fe1;
                     background: #fff;
-                    padding: 0 80px 0 140px;
+                    padding: 0 80px 0 160px;
 
                     &:focus {
                         outline-color: #569fe1;
@@ -87,10 +90,12 @@
                 margin: 0 5px 0 0;
                 height: 35px;
                 border-radius: 60px;
-                color: #c5c5c5;
                 border: 1px solid #c5c5c5;
                 background: #fff;
                 cursor: pointer;
+              span{
+                color: #c5c5c5;
+              }
             }
 
             .focus {
@@ -100,10 +105,12 @@
                 margin: 0 5px 0 0;
                 height: 35px;
                 border-radius: 60px;
-                color: #569fe1;
                 border: 1px solid #569fe1;
                 background: #fff;
                 cursor: pointer;
+              span{
+                color: #569fe1;
+              }
             }
         }
     }
@@ -114,5 +121,13 @@
         > img {
             width: 723px;
         }
+    }
+}
+
+
+.input-wrapper {
+    input {
+        border: none;
+        outline: none;
     }
 }

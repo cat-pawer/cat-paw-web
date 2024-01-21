@@ -1,4 +1,4 @@
-import { loadLocalStorage, saveLocalStorage } from "src/utils/common";
+import { saveLocalStorage } from "src/utils/common";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiGetClient } from "src/utils/api";
@@ -42,7 +42,7 @@ function LoginPage() {
 
     const openLoginPopup = (provider: OauthProvider) => {
         window.open(
-            `${CONSTANTS.API_SERVER}oauth/authorization/${provider.valueOf()}`,
+            `${CONSTANTS.API_SERVER}/oauth/authorization/${provider.valueOf()}`,
             "_blank",
             getPopupOptions(700, 600),
         );
@@ -60,25 +60,30 @@ function LoginPage() {
     const originValidator = (event: MessageEvent) => {
         if (!event || !event.data) return false;
         const { token, from } = event.data as { token: string; from: string };
-        return (
-            event.origin !== CONSTANTS.FRONT ||
-            !from.startsWith(`${CONSTANTS.FRONT}oauth/success`)
-        );
+        // return (
+        //     event.origin === CONSTANTS.FRONT &&
+        //     from.startsWith(`${CONSTANTS.FRONT}oauth/success`)
+        // );
+        return from?.indexOf(`${CONSTANTS.FRONT}oauth/success`) > -1;
     };
 
     const tokenValidator = (event: MessageEvent) => {
         if (!event) return false;
         const data = event.data as { token: string; from: string };
+
         return !data || !data.token || data.token.trim() !== "";
     };
 
     const handlePostMessage = (event: MessageEvent) => {
-        if (!originValidator(event) || !tokenValidator(event)) {
+        if (!originValidator(event)) return;
+
+        if (!tokenValidator(event)) {
             loginFailProcess();
             return;
         }
-
-        saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, event.data.token as string);
+        saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, {
+            token: event.data.token as string,
+        });
         loginSuccessProcess();
     };
 
@@ -95,6 +100,9 @@ function LoginPage() {
             <button onClick={() => openLoginPopup(OauthProvider.NAVER)}>
                 네이버 로그인
             </button>
+            <a href={`${CONSTANTS.API_SERVER}/oauth/authorization/google`}>
+                구글 태그
+            </a>
         </div>
     );
 }

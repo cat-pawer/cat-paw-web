@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import sample1 from "../public/images/sample1.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import GoBackBtn from "../components/common/GoBackBtn";
+import { apiGetClient } from "src/utils/api";
+import { calculateDDay, formatDate } from "src/utils/DateUtil";
+import { InfoType } from "@/utils/type";
 
 function ProjectDetailPage() {
-    const navigate = useNavigate();
+    const { state } = useLocation();
+    const projectId = state?.projectId;
+    const [detailData, setDetailData] = useState<InfoType>();
+
+    const titleList = [
+        "프로젝트 소개",
+        "프로젝트 진행방향",
+        "필요 및 담당 분야",
+        "자격 요건",
+        "우대 사항",
+        "우대 사항",
+    ];
     const List = [
         {
             intro:
@@ -55,203 +70,225 @@ function ProjectDetailPage() {
         },
     ];
 
-    const goBack = () => {
-        navigate(-1);
+    const projectDetail = async () => {
+        const res = await apiGetClient(`recruit/detail/${projectId}`);
+        if (res) {
+            if (res.status === 200) {
+                const formedDetailData: any = {
+                    ...res.data.data,
+                    deadLine: calculateDDay(res.data.data.recruitPeriod),
+                    updated: formatDate(res.data.data.updated),
+                    recruitPeriod: formatDate(res.data.data.recruitPeriod),
+                };
+                setDetailData(formedDetailData);
+            }
+        }
     };
+
     const handleEnterEvent = (e: any) => {
         if (e.key === "Enter") {
             console.log("등록");
         }
     };
+
+    useEffect(() => {
+        projectDetail().then((r) => null);
+    }, [projectId]);
+    //데이터를 가져온후, 상태 업데이트 , 업데이트된 상태 로그
+    useEffect(() => {
+        console.log(detailData);
+    }, [detailData]);
     return (
-        <div className="detail">
-            <div className="detail-btn">
-                <div
-                    className="detail-btn-previous"
-                    onClick={goBack}
-                    role="none">
-                    <button>이전</button>
-                </div>
-                <div className="detail-btn-next">
-                    <button>버튼</button>
-                </div>
-            </div>
-            <div className="detail-section">
-                <div className="detail-info">
-                    <div className="detail-info-tag">
-                        <span>#프론트 #백 #개발자</span>
-                    </div>
-                    <div className="detail-info-title">
-                        <span>
-                            [프론트/백개발자] 함께 000 프로젝트 성실하게 임하실
-                            분 구해요. 주 1회 온라인으로만 만나서 빠르게
-                            진행하려고 합니다. 어쩌구 저쩌구 이러쿵 저러쿵
-                        </span>
-                    </div>
-                    <div className="detail-info-nickname">
-                        <span>김인국바보</span>
-                    </div>
-                    <div className="detail-info-set">
-                        <div className="detail-info-set-regi">
-                            <span>등록일 </span>
-                            <span>23.10.01</span>
-                        </div>
-                        <div className="detail-info-set-hits">
-                            <span>조회수 </span>
-                            <span>24</span>
-                        </div>
-                    </div>
-                </div>
-                <div className="detail-data">
-                    <div className="detail-data-top">
-                        <div className="detail-data-top-left">
-                            <div className="detail-data-top-element">
-                                <span className="detail-data-element">
-                                    마감 날짜
-                                </span>
-                                <span className="detail-data-elInfo">
-                                    23.10.11
-                                </span>
+        <div>
+            {detailData && (
+                <div className="detail">
+                    <GoBackBtn />
+                    <div className="detail-section">
+                        <div className="detail-info">
+                            <div className="detail-info-tag">
+                                {detailData.tagList.map((item, itemIndex) => (
+                                    <span key={itemIndex}>#{item.name} </span>
+                                ))}
                             </div>
-                            <div className="detail-data-top-element">
-                                <span className="detail-data-element">
-                                    연락 방법
-                                </span>
-                                <span className="detail-data-elInfo">
-                                    오픈톡
-                                </span>
+                            <div className="detail-info-title">
+                                <span>{detailData.title}</span>
                             </div>
-                            <div className="detail-data-top-element">
-                                <span className="detail-data-element">
-                                    모집 인원
-                                </span>
-                                <span className="detail-data-elInfo">6명</span>
+                            <div className="detail-info-nickname">
+                                <span>{detailData.id}</span>
                             </div>
-                        </div>
-                        <div className="detail-data-top-right">
-                            <div className="detail-data-top-element">
-                                <span className="detail-data-element">
-                                    예상 기간
-                                </span>
-                                <span className="detail-data-elInfo">
-                                    4개월
-                                </span>
-                            </div>
-                            <div className="detail-data-top-element">
-                                <span className="detail-data-element">
-                                    진행 방식
-                                </span>
-                                <span className="detail-data-elInfo">
-                                    온라인
-                                </span>
-                            </div>
-                            <div className="detail-data-top-element">
-                                <span className="detail-data-element">
-                                    모집 분야
-                                </span>
-                                <span className="detail-data-elInfo">
-                                    프론트/백엔드 개발자
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="detail-data-bottom">
-                        <div>
-                            <span className="detail-data-element">
-                                사용 언어
-                            </span>
-                        </div>
-                        <div className="detail-data-bottom-language">
-                            <div className="detail-data-bottom-language-list">
-                                <span className="detail-langIcon">●</span>
-                                <span>JavaScript</span>
-                            </div>
-                            <div className="detail-data-bottom-language-list">
-                                <span className="detail-langIcon">●</span>
-                                <span>TypeScript</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="detail-section2">
-                {List.map((item, index) => (
-                    <div key={index} className="detail-intro">
-                        <div className="detail-intro-duce">
-                            <span>프로젝트 소개</span>
-                        </div>
-                        <div className="detail-intro-mainContent">
-                            <span>{item.intro}</span>
-                        </div>
-                        <div className="detail-intro-img">
-                            <img src={sample1} alt="샘플사진" />
-                        </div>
-                        <div className="detail-intro-duce">
-                            <span>프로젝트 진행방향</span>
-                        </div>
-                        <div className="detail-intro-content">
-                            <span>{item.progress}</span>
-                        </div>
-                        <div className="detail-intro-duce">
-                            <span>필요 및 담당 분야</span>
-                        </div>
-                        <div className="detail-intro-content">
-                            <span>{item.areas}</span>
-                        </div>
-                        <div className="detail-intro-duce">
-                            <span>자격 요건</span>
-                        </div>
-                        <div className="detail-intro-content">
-                            <span>{item.qualification}</span>
-                        </div>
-                        <div className="detail-intro-duce">
-                            <span>우대 사항</span>
-                        </div>
-                        <div className="detail-intro-content">
-                            <span>{item.treatment}</span>
-                        </div>
-                        <div className="detail-intro-duce">
-                            <span>우대 사항</span>
-                        </div>
-                        <div className="detail-intro-content">
-                            <span>{item.treatment2}</span>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className="detail-section3">
-                <div className="detail-intro-duce">
-                    <span>댓글</span>
-                </div>
-                <div className="detail-input">
-                    <div className="detail-input-comment">
-                        <input onKeyDown={handleEnterEvent} />
-                    </div>
-                    <button>등록하기</button>
-                </div>
-                <div className="detail-subInfo">
-                    {commentList.map((comment, index) => (
-                        <div key={index} className="detail-subInfo-wrap">
-                            <div className="detail-subInfo-wrap-comment">
-                                <div className="detail-subInfo-wrap-comment-user">
-                                    <div className="detail-subInfo-wrap-comment-user-nick">
-                                        <span>{comment.nickname}</span>
-                                    </div>
-                                    <div className="detail-subInfo-wrap-comment-user-content">
-                                        <span>{comment.content}</span>
-                                    </div>
+                            <div className="detail-info-set">
+                                <div className="detail-info-set-regi">
+                                    <span>등록일 </span>
+                                    <span>{detailData.updated}</span>
                                 </div>
-                                <div className="detail-subInfo-wrap-comment-close">
-                                    <FontAwesomeIcon icon={faTimes} />
+                                <div className="detail-info-set-hits">
+                                    <span>조회수 </span>
+                                    <span>{detailData.viewCount}</span>
                                 </div>
                             </div>
-                            {index === commentList.length - 1 ? null : (
-                                <div className="detail-subInfo-wrap-line"></div>
-                            )}
                         </div>
-                    ))}
+                        <div className="detail-data">
+                            <div className="detail-data-top">
+                                <div className="detail-data-top-left">
+                                    <div className="detail-data-top-element">
+                                        <span className="detail-data-element">
+                                            마감 날짜
+                                        </span>
+                                        <span className="detail-data-elInfo">
+                                            {detailData.recruitPeriod}
+                                        </span>
+                                    </div>
+                                    <div className="detail-data-top-element">
+                                        <span className="detail-data-element">
+                                            연락 방법
+                                        </span>
+                                        <span className="detail-data-elInfo">
+                                            오픈톡
+                                        </span>
+                                    </div>
+                                    <div className="detail-data-top-element">
+                                        <span className="detail-data-element">
+                                            모집 인원
+                                        </span>
+                                        <span className="detail-data-elInfo">
+                                            {detailData.peopleNumber}명
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="detail-data-top-right">
+                                    <div className="detail-data-top-element">
+                                        <span className="detail-data-element">
+                                            예상 기간
+                                        </span>
+                                        <span className="detail-data-elInfo">
+                                            {detailData.expectDuration}개월
+                                        </span>
+                                    </div>
+                                    <div className="detail-data-top-element">
+                                        <span className="detail-data-element">
+                                            진행 방식
+                                        </span>
+                                        <span className="detail-data-elInfo">
+                                            {detailData.onlineType === "ONLINE"
+                                                ? "온라인"
+                                                : "오프라인"}
+                                        </span>
+                                    </div>
+                                    <div className="detail-data-top-element">
+                                        <span className="detail-data-element">
+                                            모집 분야
+                                        </span>
+                                        <span className="detail-data-elInfo">
+                                            프론트/백엔드 개발자
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="detail-data-bottom">
+                                <div>
+                                    <span className="detail-data-element">
+                                        사용 언어
+                                    </span>
+                                </div>
+                                <div className="detail-data-bottom-language">
+                                    {detailData.techList.map(
+                                        (item, itemIndex) => (
+                                            <div
+                                                className="detail-data-bottom-language-list"
+                                                key={itemIndex}>
+                                                <span className="detail-langIcon">
+                                                    ●
+                                                </span>
+                                                <span>{item.name}</span>
+                                            </div>
+                                        ),
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="detail-section2">
+                        {List.map((item, index) => (
+                            <div key={index} className="detail-intro">
+                                <div className="detail-intro-duce">
+                                    <span>프로젝트 소개</span>
+                                </div>
+                                <div className="detail-intro-mainContent">
+                                    <span>{item.intro}</span>
+                                </div>
+                                <div className="detail-intro-img">
+                                    <img src={sample1} alt="샘플사진" />
+                                </div>
+                                <div className="detail-intro-duce">
+                                    <span>프로젝트 진행방향</span>
+                                </div>
+                                <div className="detail-intro-content">
+                                    <span>{item.progress}</span>
+                                </div>
+                                <div className="detail-intro-duce">
+                                    <span>필요 및 담당 분야</span>
+                                </div>
+                                <div className="detail-intro-content">
+                                    <span>{item.areas}</span>
+                                </div>
+                                <div className="detail-intro-duce">
+                                    <span>자격 요건</span>
+                                </div>
+                                <div className="detail-intro-content">
+                                    <span>{item.qualification}</span>
+                                </div>
+                                <div className="detail-intro-duce">
+                                    <span>우대 사항</span>
+                                </div>
+                                <div className="detail-intro-content">
+                                    <span>{item.treatment}</span>
+                                </div>
+                                <div className="detail-intro-duce">
+                                    <span>우대 사항</span>
+                                </div>
+                                <div className="detail-intro-content">
+                                    <span>{item.treatment2}</span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="detail-section3">
+                        <div className="detail-intro-duce">
+                            <span>댓글</span>
+                        </div>
+                        <div className="detail-input">
+                            <div className="detail-input-comment">
+                                <input onKeyDown={handleEnterEvent} />
+                            </div>
+                            <button>등록하기</button>
+                        </div>
+                        <div className="detail-subInfo">
+                            {commentList.map((comment, index) => (
+                                <div
+                                    key={index}
+                                    className="detail-subInfo-wrap">
+                                    <div className="detail-subInfo-wrap-comment">
+                                        <div className="detail-subInfo-wrap-comment-user">
+                                            <div className="detail-subInfo-wrap-comment-user-nick">
+                                                <span>{comment.nickname}</span>
+                                            </div>
+                                            <div className="detail-subInfo-wrap-comment-user-content">
+                                                <span>{comment.content}</span>
+                                            </div>
+                                        </div>
+                                        <div className="detail-subInfo-wrap-comment-close">
+                                            <FontAwesomeIcon icon={faTimes} />
+                                        </div>
+                                    </div>
+                                    {index === commentList.length - 1 ? null : (
+                                        <div className="detail-subInfo-wrap-line"></div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

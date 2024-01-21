@@ -1,149 +1,93 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ProjectPage() {
+const ProjectPage: React.FC<{ searchProjectList: any[] }> = ({
+    searchProjectList,
+}) => {
     const navigate = useNavigate();
-    const List = [
-        {
-            division: "📓프로젝트",
-            subTitle:
-                "[프론트/백개발자] 함께 000 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "35",
-            language: [
-                "Java",
-                "react.js",
-                "vue.js",
-                "HTML",
-                "CSS",
-                "TypeScript",
-            ],
-        },
-        {
-            division: "📓프로젝트",
-            subTitle:
-                "[프론트/백개발자] 함께 000 프로젝트 성실하게 임하실 분 구해요. 주 1회 온라인으로만 만나서 빠르게 진행하려고합니다.",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "488",
-            language: ["Java", "TS", "react.js"],
-        },
-        {
-            division: "📙스터디",
-            subTitle:
-                "[프론트/백개발자] 함께 xxx 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "38",
-            language: ["Java", "TS", "react.js"],
-        },
-        {
-            division: "📙스터디",
-            subTitle:
-                "[프론트/백개발자] 함께 000 프로젝트 성실하게 임하실 분 구해요. 주 1회 온라인으로만 만나서 빠르게 진행하려고합니다. 어쩌구 저쩌구 이러쿵 저러쿵",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "32",
-            language: [
-                "Java",
-                "react.js",
-                "vue.js",
-                "HTML",
-                "CSS",
-                "TypeScript",
-            ],
-        },
-        {
-            division: "📙스터디",
-            subTitle:
-                "[프론트/백개발자] 함께 zzz 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "6",
-            language: ["Java", "TS", "react.js"],
-        },
-        {
-            division: "📓프로젝트",
-            subTitle:
-                "[프론트/백개발자] 함께 zzz 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "5",
-            language: ["Java", "TS", "react.js"],
-        },
-        {
-            division: "📓프로젝트",
-            subTitle:
-                "[프론트/백개발자] 함께 zzz 프로젝트 성실하게 임하실 분 구함",
-            tag: "#프론트 #백 #개발자",
-            date: "23.10.12",
-            hits: "367",
-            comment: "5",
-            language: ["Java", "TS", "react.js"],
-        },
-    ];
+
+    const handleCardClick = (id: string) => {
+        navigate(`/projectDetail/${id}`, { state: { projectId: id } }); //파라미터 함께 전달
+    };
 
     return (
         <div className="whole-project">
-            <div className="project-title">
-                <span>전체 프로젝트</span>
+            <div
+                className={
+                    searchProjectList.length === 0
+                        ? "project-none"
+                        : "project-title"
+                }>
+                {searchProjectList.length === 0 ? (
+                    <span>프로젝트 없음</span>
+                ) : (
+                    <span>전체 프로젝트</span>
+                )}
             </div>
             <div className="whole-project-list">
-                {List.map((info, index) => (
+                {searchProjectList.map((info, index) => (
                     <div key={index} className="whole-project-card">
                         <div
                             className="whole-project-list-card"
                             key={index}
-                            onClick={() => navigate("/projectDetail/" + index)}
-                            role="none">
+                            id={info.id}
+                            onClick={() => handleCardClick(info.id)}
+                            role="presentation">
                             <div className="project-list-section-card-project">
-                                <div className="project-list-section-card-project-division">
-                                    <span>{info.division}</span>
+                                <div className="project-list-section-card-project-recruitType">
+                                    <span>
+                                        {info.recruitType === "PROJECT"
+                                            ? "📓프로젝트"
+                                            : "📙스터디"}
+                                    </span>
                                 </div>
                                 <div className="project-list-section-card-project-dead">
                                     <span>🚨</span>
-                                    <span>D-3</span>
+                                    <span>D{info.deadLine}</span>
                                 </div>
                             </div>
                             <div className="whole-project-list-card-tag">
-                                <span>{info.tag}</span>
+                                {info.hashList.map(
+                                    (item: any, itemIndex: number) => (
+                                        <span key={itemIndex}>
+                                            #{item.name}
+                                        </span>
+                                    ),
+                                )}
                             </div>
                             <div className="whole-project-list-card-title">
-                                <span>{info.subTitle}</span>
+                                <span>{info.title}</span>
                             </div>
                             <div className="whole-project-list-card-bottom">
-                                <div className="whole-project-list-card-bottom-language">
-                                    {info.language.map((item, itemIndex) => (
-                                        <div
-                                            key={itemIndex}
-                                            className="whole-project-list-card-bottom-language-list">
-                                            <span className="project-langIcon">
-                                                ●
-                                            </span>
-                                            <span>{item}</span>
-                                        </div>
-                                    ))}
+                                <div className="whole-project-list-card-bottom-techList">
+                                    {info.techList.map(
+                                        (item: any, itemIndex: number) => (
+                                            <div
+                                                key={itemIndex}
+                                                className="whole-project-list-card-bottom-techList-list">
+                                                <span className="project-langIcon">
+                                                    ●
+                                                </span>
+                                                <span>{item.name}</span>
+                                            </div>
+                                        ),
+                                    )}
                                 </div>
                                 <div className="whole-project-list-card-bottom-line"></div>
                                 <div className="whole-project-list-card-bottom-info">
                                     <div>
                                         <span>마감일 </span>
-                                        <span>{info.date}</span>
+                                        <span>{info.recruitPeriod}</span>
                                     </div>
                                     <div className="info">
-                                        <div className="info-comment">
+                                        <div className="info-commentCount">
                                             <span>댓글 </span>
-                                            <span>{info.comment}</span>
+                                            <span>{info.commentCount}</span>
                                         </div>
-                                        <span>조회수 </span>
-                                        <span>{info.hits}</span>
+                                        <div>
+                                            <span>조회수 </span>
+                                            <span>{info.viewCount}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -153,6 +97,6 @@ function ProjectPage() {
             </div>
         </div>
     );
-}
+};
 
 export default ProjectPage;

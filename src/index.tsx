@@ -9,6 +9,9 @@ import SubProjectPage from "./views/SubProjectPage";
 import ProjectDetailPage from "./views/ProjectDetailPage";
 import LoginPage from "./views/LoginPage";
 import OauthSuccessPage from "./views/OauthSuccessPage";
+import ChatTestPage from "./views/ChatTestPage";
+import MyPage from "./views/MyPage";
+import MyProjectDetailPage from "./views/MyProjectDetailPage";
 
 const router = createBrowserRouter([
     {
@@ -18,10 +21,6 @@ const router = createBrowserRouter([
     {
         path: "/main",
         element: <MainPage />,
-    },
-    {
-        path: "/subProject",
-        element: <SubProjectPage />,
     },
     {
         path: "/projectDetail/:index",
@@ -35,6 +34,18 @@ const router = createBrowserRouter([
         path: "/oauth/success",
         element: <OauthSuccessPage />,
     },
+    {
+        path: "/chat",
+        element: <ChatTestPage />,
+    },
+    {
+        path: "/myPage",
+        element: <MyPage />,
+    },
+    {
+        path: "/myProjectDetail/:index",
+        element: <MyProjectDetailPage />,
+    },
 ]);
 
 const root = ReactDOM.createRoot(
@@ -43,8 +54,8 @@ const root = ReactDOM.createRoot(
 root.render(
     //감 쌈으로써 store사용가능하게됨,prop으로전달할 수 있도록
     <Provider store={store}>
-        <React.StrictMode>
-            <RouterProvider router={router} />
-        </React.StrictMode>
+        {/*<React.StrictMode>*/}
+        <RouterProvider router={router} />
+        {/*</React.StrictMode>*/}
     </Provider>,
 );

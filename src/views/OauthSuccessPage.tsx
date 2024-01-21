@@ -1,7 +1,5 @@
-import { saveLocalStorage } from "src/utils/common";
 import React, { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CONSTANTS } from "src/constants";
 
 function OauthSuccessPage() {
     const [searchParams, setSearchParams] = useSearchParams();
