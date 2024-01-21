@@ -14,7 +14,7 @@ const NoticePut = () => {
                             placeholder="내용을 입력하세요"
                         />
                     </div>
-                    <div className="my-notice-put-info-title-del">
+                    <div>
                         <FontAwesomeIcon icon={faTimes} className="icon" />
                     </div>
                 </div>

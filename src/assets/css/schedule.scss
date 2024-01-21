@@ -27,14 +27,18 @@
         }
         .title {
             font-size: 26px;
+            font-weight: bold;
         }
 
         .btn-wrapper{
             display: flex;
-            width: 300px;
+            width: 100px;
             justify-content: space-between;
             align-items: center;
         }
+            .deleteBtn{
+                color: #ff7878;
+            }
         button{
             font-size: 20px;
             color: #569FE1;

@@ -45,7 +45,7 @@ const CatPawInput: React.FC<{
                 onKeyPress={handleKeyPress}
                 onBlur={handleBlur}
                 placeholder={
-                    isNew ? "보드 이름을 입력하세요" : "일감을 추가하세요"
+                    isNew ? "✏️보드 이름을 입력하세요" : "✏️일감을 추가하세요"
                 }
             />
         </div>

@@ -17,7 +17,7 @@ const ScheduleBox: React.FC<{
     const [scheduleTitle, setScheduleTitle] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [removeList, setRemoveList] = useState<Array<number>>([]);
-
+    const [isCheck, setCheck] = useState<boolean>(false);
     const handleChangeScheduleTitle = (
         e: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -48,12 +48,12 @@ const ScheduleBox: React.FC<{
     };
 
     const handleCheckbox = (summaryId: number) => {
-        console.log(removeList);
         if (removeList.includes(summaryId)) {
             setRemoveList([...removeList.filter((id) => id !== summaryId)]);
         } else {
             setRemoveList([...removeList, summaryId]);
         }
+
     };
 
     const handleEnterTitle = () => {
@@ -78,7 +78,12 @@ const ScheduleBox: React.FC<{
         //         handleScheduleUpdate,
         //     );
         // };
-    }, []);
+        if(removeList.length == 0){
+            setCheck(false);
+        } else {
+            setCheck(true)
+        }
+    }, [removeList]);
 
     return (
         <div className="schedule-wrapper">
@@ -93,11 +98,13 @@ const ScheduleBox: React.FC<{
             ) : (
                 <div className="title-wrapper">
                     <div className="title">{schedule?.title}</div>
+                    {isCheck ?
+                    <button className="deleteBtn" onClick={doSummaryRemove}>삭제하기</button> :
                     <div className="btn-wrapper">
-                    <button onClick={doScheduleRemove}>보드 삭제</button>
-                    <button onClick={doSummaryRemove}>일정 삭제</button>
                     <button>추가</button>
+                    <button className="deleteBtn" onClick={doScheduleRemove}>삭제</button>
                     </div>
+                    }
                 </div>
             )}
             <div className="schedule-box">
