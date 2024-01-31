@@ -11,7 +11,7 @@ const NoticePut = () => {
                         {/*<FontAwesomeIcon icon={faPencil} className="icon" />*/}
                         <input
                             className="input-title"
-                            placeholder="내용을 입력하세요"
+                            placeholder="✏️내용을 입력하세요"
                         />
                     </div>
                     <div>

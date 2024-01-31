@@ -140,7 +140,43 @@
                 }
 
                 .date-area {
+                    position: relative;
                     width: 172px;
+                    &-null{
+
+                    }
+                    &-moment{
+                        &-null{
+                            display: none;
+                        }
+                        position: relative;
+                        cursor: pointer;
+                        display: flex;
+                        width: 150px;
+                        height: 35px;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 80px;
+                        background-color: #70C77A;
+                        span{
+                            font-size: 18px;
+                            color: white;
+                            font-weight: 500;
+                        }
+                        &-del{
+                            position: absolute;
+                            cursor: pointer;
+                            right: 12px;
+                            top: 4px;
+                            span{
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                    .backColor{
+                        color: white;
+                        background-color: #D9D9D9;
+                    }
                 }
 
                 .state-area {

@@ -131,6 +131,7 @@ const ScheduleBox: React.FC<{
                         : schedule?.scheduleSummaryDtoList.map((summary, i) => {
                               return (
                                   <ScheduleInput
+                                      index = {i}
                                       key={i + "_" + summary.id}
                                       scheduleId={schedule.id}
                                       scheduleSummary={summary}

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
+import "../../assets/css/calendar.scss";
 
 interface calendarType {
-    value: Date;
+    value: Date | string;
     handleDateChange: (date: Date) => void //날짜 변경 이벤트 처리
 }
 
