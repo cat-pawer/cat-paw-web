@@ -28,11 +28,13 @@ function OauthSuccessPage() {
     const doProcess = (): void => {
         const isMobile = checkMobileDevice(window.navigator.userAgent);
         if (!isMobile) {
-            window.opener.postMessage(
-                { token: getToken(), from: window.location.href },
-                "*",
-            );
-            window.close();
+            if (window && window.opener) {
+                window.opener.postMessage(
+                    { token: getToken(), from: window.location.href },
+                    "*",
+                );
+                window.close();
+            }
         }
     };
 

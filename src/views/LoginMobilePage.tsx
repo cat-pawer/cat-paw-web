@@ -57,9 +57,9 @@ function LoginMobilePage() {
     useEffect(() => {
         console.log("provider", searchParams.get("provider"));
         if (searchParams.get("provider") === OauthProvider.GOOGLE) {
-            openLoginPopup(OauthProvider.GOOGLE);
+            window.location.href = `${CONSTANTS.API_SERVER}/oauth/authorization/${OauthProvider.GOOGLE}`;
         } else if (searchParams.get("provider") === OauthProvider.NAVER) {
-            openLoginPopup(OauthProvider.NAVER);
+            window.location.href = `${CONSTANTS.API_SERVER}/oauth/authorization/${OauthProvider.NAVER}`;
         } else {
             window.alert("지원하지 않는 로그인 방식입니다.");
         }
