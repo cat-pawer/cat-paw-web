@@ -12,12 +12,28 @@ function OauthSuccessPage() {
         return null;
     };
 
+    const checkMobileDevice = (agent: string) => {
+        const mobileRegex = [
+            /Android/i,
+            /iPhone/i,
+            /iPad/i,
+            /iPod/i,
+            /BlackBerry/i,
+            /Windows Phone/i,
+        ];
+
+        return mobileRegex.some((mobile) => agent.match(mobile));
+    };
+
     const doProcess = (): void => {
-        window.opener.postMessage(
-            { token: getToken(), from: window.location.href },
-            "*",
-        );
-        window.close();
+        const isMobile = checkMobileDevice(window.navigator.userAgent);
+        if (!isMobile) {
+            window.opener.postMessage(
+                { token: getToken(), from: window.location.href },
+                "*",
+            );
+            window.close();
+        }
     };
 
     useEffect(() => {
