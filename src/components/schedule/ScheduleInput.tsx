@@ -32,6 +32,7 @@ const ScheduleInput: React.FC<{
         } else {
             setDate({startDate: date, endDate: ""})
         }
+        handleChangeDate();
     }
     const value: string | Date = fetchDate.startDate || "";
     const delDate = () => {
@@ -60,10 +61,22 @@ const ScheduleInput: React.FC<{
         );
     };
 
-    const handleChangeDate = () => {
+    const handleClickDate = () => {
         setCaleIndex(index);
         setCale(!isCale);
     };
+    const handleChangeDate = () => {
+        getChatManager().updateScheduleSummary(
+            scheduleId,
+            {
+                ...scheduleSummary,
+                startDate: fetchDate.startDate,
+                endDate: fetchDate.endDate,
+            },
+        );
+        console.log(scheduleSummary);
+    }
+
 
     const handleChangeState = () => {
         console.log("click");
@@ -79,6 +92,8 @@ const ScheduleInput: React.FC<{
     useEffect(() => {
         console.log("list", fetchDate);
         setCale(false);
+        console.log(scheduleSummary)
+
     }, [fetchDate]);
 
     return (
@@ -98,14 +113,15 @@ const ScheduleInput: React.FC<{
                 />
             </div>
             <div className="date-area center grid">
-                <div className={ fetchDate.startDate === "" ? "date-area-moment-null" : "date-area-moment"} onClick={handleChangeDate} role="none">
-                    <span>{ moment(fetchDate.startDate).format("M/D~")}</span>
-                    <span>{ fetchDate.endDate ? moment(fetchDate.startDate).format("M") === moment(fetchDate.endDate).format("M") ? moment(fetchDate.endDate).format("D") : moment(fetchDate.endDate).format("M/D") : null }</span>
-                    <div className="date-area-moment-del" onClick={delDate} role="none">
-                        <span>x</span>
-                    </div>
-                </div>
-                {fetchDate.startDate !== "" ? null :<div className="date-area-moment backColor"  onClick={handleChangeDate} role="none">-</div>}
+                { fetchDate.startDate === "" || fetchDate.startDate === null ?
+                    <div className="date-area-moment backColor"  onClick={handleClickDate} role="none">-</div> :
+                    <div className="date-area-moment" onClick={handleClickDate} role="none">
+                        <span>{ moment(fetchDate.startDate).format("M/D~")}</span>
+                        <span>{ fetchDate.endDate ? moment(fetchDate.startDate).format("M") === moment(fetchDate.endDate).format("M") ? moment(fetchDate.endDate).format("D") : moment(fetchDate.endDate).format("M/D") : null }</span>
+                        <div className="date-area-moment-del" onClick={delDate} role="none">
+                            <span>x</span>
+                        </div>
+                    </div> }
                 {isCale && caleIndex === index ?
                         <Calendar value={value} handleDateChange={handleDate}/>
                     : null }

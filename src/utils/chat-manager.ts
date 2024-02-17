@@ -47,8 +47,8 @@ export type ScheduleSummary = {
     id: number;
     cMemberId: number;
     title: string;
-    startDate: Date;
-    endDate: Date;
+    startDate: Date| string | undefined;
+    endDate: Date| string | undefined;
     status: number;
     created: Date;
     updated: Date;
@@ -334,7 +334,7 @@ export class ChatManager extends EventTarget implements ChatInterface {
         } as CustomMessage);
     }
 
-    updateScheduleSummary(scheduleId: number, summary: ScheduleSummary): void {
+    updateScheduleSummary(scheduleId: number, summary: { cMemberId: number; updatedBy: string; endDate: Date | string | undefined; createdBy: string; created: Date; id: number; title: string; updated: Date; startDate: Date | string | undefined; status: number }): void {
         if (!summary || !summary.id) return;
         this.sendMessage({
             destination: "/app/message/update",
