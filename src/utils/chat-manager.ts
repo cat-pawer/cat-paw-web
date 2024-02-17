@@ -345,6 +345,7 @@ export class ChatManager extends EventTarget implements ChatInterface {
                 data: JSON.stringify(summary),
             } as MessageDto,
         } as CustomMessage);
+        console.log("S", summary)
     }
 
     removeScheduleSummary(scheduleId: number, removeList: Array<number>): void {

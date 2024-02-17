@@ -32,7 +32,6 @@ const ScheduleInput: React.FC<{
         } else {
             setDate({startDate: date, endDate: ""})
         }
-        handleChangeDate();
     }
     const value: string | Date = fetchDate.startDate || "";
     const delDate = () => {
@@ -74,7 +73,6 @@ const ScheduleInput: React.FC<{
                 endDate: fetchDate.endDate,
             },
         );
-        console.log(scheduleSummary);
     }
 
 
@@ -91,9 +89,8 @@ const ScheduleInput: React.FC<{
     }, []);
     useEffect(() => {
         console.log("list", fetchDate);
+        handleChangeDate()
         setCale(false);
-        console.log(scheduleSummary)
-
     }, [fetchDate]);
 
     return (
