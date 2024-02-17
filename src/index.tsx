@@ -12,6 +12,7 @@ import OauthSuccessPage from "./views/OauthSuccessPage";
 import ChatTestPage from "./views/ChatTestPage";
 import MyPage from "./views/MyPage";
 import MyProjectDetailPage from "./views/MyProjectDetailPage";
+import LoginMobilePage from "./views/LoginMobilePage";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ const router = createBrowserRouter([
         path: "/login",
         element: <LoginPage />,
     },
+    {
+        path: "/login/mobile",
+        element: <LoginMobilePage />,
+    },
+
     {
         path: "/oauth/success",
         element: <OauthSuccessPage />,

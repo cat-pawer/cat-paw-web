@@ -1,13 +1,14 @@
 import { saveLocalStorage } from "src/utils/common";
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { apiGetClient } from "src/utils/api";
 import ProjectList from "../components/board/ProjectList";
 import { CONSTANTS } from "../constants";
 import { OauthProvider } from "../utils/type";
 
-function LoginPage() {
+function LoginMobilePage() {
     const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const getPopupOptions = (w: number, h: number): string => {
         const dualScreenLeft =
@@ -48,60 +49,23 @@ function LoginPage() {
         );
     };
 
-    const loginSuccessProcess = () => {
-        navigate("/");
-    };
-
     const loginFailProcess = () => {
         window.alert("로그인 실패");
         navigate("/login");
     };
 
-    const originValidator = (event: MessageEvent) => {
-        if (!event || !event.data) return false;
-        const { token, from } = event.data as { token: string; from: string };
-        // return (
-        //     event.origin === CONSTANTS.FRONT &&
-        //     from.startsWith(`${CONSTANTS.FRONT}oauth/success`)
-        // );
-        return from?.indexOf(`${CONSTANTS.FRONT}oauth/success`) > -1;
-    };
-
-    const tokenValidator = (event: MessageEvent) => {
-        if (!event) return false;
-        const data = event.data as { token: string; from: string };
-
-        return !data || !data.token || data.token.trim() !== "";
-    };
-
-    const handlePostMessage = (event: MessageEvent) => {
-        if (!originValidator(event)) return;
-
-        if (!tokenValidator(event)) {
-            loginFailProcess();
-            return;
-        }
-        saveLocalStorage(CONSTANTS.KEY.USER_TOKEN, {
-            token: event.data.token as string,
-        });
-        loginSuccessProcess();
-    };
-
     useEffect(() => {
-        window.addEventListener("message", handlePostMessage);
-        return () => window.removeEventListener("message", handlePostMessage);
+        console.log("provider", searchParams.get("provider"));
+        if (searchParams.get("provider") === OauthProvider.GOOGLE) {
+            openLoginPopup(OauthProvider.GOOGLE);
+        } else if (searchParams.get("provider") === OauthProvider.NAVER) {
+            openLoginPopup(OauthProvider.NAVER);
+        } else {
+            window.alert("지원하지 않는 로그인 방식입니다.");
+        }
     }, []);
 
-    return (
-        <div>
-            <button onClick={() => openLoginPopup(OauthProvider.GOOGLE)}>
-                구글 로그인
-            </button>
-            <button onClick={() => openLoginPopup(OauthProvider.NAVER)}>
-                네이버 로그인
-            </button>
-        </div>
-    );
+    return <div></div>;
 }
 
-export default LoginPage;
+export default LoginMobilePage;
