@@ -53,7 +53,6 @@ const ScheduleBox: React.FC<{
         } else {
             setRemoveList([...removeList, summaryId]);
         }
-
     };
 
     const handleEnterTitle = () => {
@@ -78,10 +77,10 @@ const ScheduleBox: React.FC<{
         //         handleScheduleUpdate,
         //     );
         // };
-        if(removeList.length == 0){
+        if (removeList.length == 0) {
             setCheck(false);
         } else {
-            setCheck(true)
+            setCheck(true);
         }
     }, [removeList]);
 
@@ -93,18 +92,27 @@ const ScheduleBox: React.FC<{
                         isNew={true}
                         value={scheduleTitle ?? "보드 이름을 입력해주세요"}
                         changeHandler={handleChangeScheduleTitle}></CatPawInput>
-                    <button className="saveBtn" onClick={doScheduleSave}>저장하기</button>
+                    <button className="saveBtn" onClick={doScheduleSave}>
+                        저장하기
+                    </button>
                 </div>
             ) : (
                 <div className="title-wrapper">
                     <div className="title">{schedule?.title}</div>
-                    {isCheck ?
-                    <button className="deleteBtn" onClick={doSummaryRemove}>삭제하기</button> :
-                    <div className="btn-wrapper">
-                    <button>추가</button>
-                    <button className="deleteBtn" onClick={doScheduleRemove}>삭제</button>
-                    </div>
-                    }
+                    {isCheck ? (
+                        <button className="deleteBtn" onClick={doSummaryRemove}>
+                            삭제하기
+                        </button>
+                    ) : (
+                        <div className="btn-wrapper">
+                            <button>추가</button>
+                            <button
+                                className="deleteBtn"
+                                onClick={doScheduleRemove}>
+                                삭제
+                            </button>
+                        </div>
+                    )}
                 </div>
             )}
             <div className="schedule-box">
@@ -131,7 +139,7 @@ const ScheduleBox: React.FC<{
                         : schedule?.scheduleSummaryDtoList.map((summary, i) => {
                               return (
                                   <ScheduleInput
-                                      index = {i}
+                                      index={i}
                                       key={i + "_" + summary.id}
                                       scheduleId={schedule.id}
                                       scheduleSummary={summary}
