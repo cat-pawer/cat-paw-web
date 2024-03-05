@@ -30,13 +30,13 @@ const ScheduleInput: React.FC<{
         // setDate(date)
         console.log("date", date);
         if (fetchDate.startDate === "") {
-            setDate({ ...fetchDate, startDate: date });
+            setDate({ ...fetchDate, startDate: moment(date).format("YYYY-MM-DD") });
         } else if (fetchDate.endDate === "") {
-            setDate({ ...fetchDate, endDate: date });
+            setDate({ ...fetchDate, endDate: moment(date).format("YYYY-MM-DD") });
         } else {
-            setDate({ startDate: date, endDate: "" });
+            setDate({ startDate: moment(date).format("YYYY-MM-DD"), endDate: "" });
         }
-        handleChangeDate(date);
+        // handleChangeDate();
     };
     const value: string | Date = fetchDate.startDate || "";
     const delDate = () => {
@@ -69,12 +69,15 @@ const ScheduleInput: React.FC<{
         setCaleIndex(index);
         setCale(!isCale);
     };
-    const handleChangeDate = (date: Date) => {
+    const handleChangeDate = () => {
+        scheduleSummary.startDate = fetchDate.startDate
+        scheduleSummary.endDate = fetchDate.endDate
         getChatManager().updateScheduleSummary(scheduleId, {
             ...scheduleSummary,
-            startDate: date,
-            endDate: fetchDate.endDate,
+            startDate: scheduleSummary.startDate,
+            endDate: scheduleSummary.endDate,
         });
+        console.log("G",scheduleSummary)
     };
 
     const handleChangeState = () => {
@@ -90,7 +93,7 @@ const ScheduleInput: React.FC<{
     }, []);
     useEffect(() => {
         console.log("list", fetchDate);
-        // handleChangeDate();
+        handleChangeDate()
         setCale(false);
     }, [fetchDate]);
 
@@ -111,7 +114,7 @@ const ScheduleInput: React.FC<{
                 />
             </div>
             <div className="date-area center grid">
-                {fetchDate.startDate === "" || fetchDate.startDate === null ? (
+                {scheduleSummary.startDate === "" || scheduleSummary.startDate === null ? (
                     <div
                         className="date-area-moment backColor"
                         onClick={handleClickDate}
@@ -124,14 +127,14 @@ const ScheduleInput: React.FC<{
                         onClick={handleClickDate}
                         role="none">
                         <span>
-                            {moment(fetchDate.startDate).format("M/D~")}
+                            {moment(scheduleSummary.startDate).format("M/D~")}
                         </span>
                         <span>
-                            {fetchDate.endDate
-                                ? moment(fetchDate.startDate).format("M") ===
-                                  moment(fetchDate.endDate).format("M")
-                                    ? moment(fetchDate.endDate).format("D")
-                                    : moment(fetchDate.endDate).format("M/D")
+                            {scheduleSummary.endDate
+                                ? moment(scheduleSummary.startDate).format("M") ===
+                                  moment(scheduleSummary.endDate).format("M")
+                                    ? moment(scheduleSummary.endDate).format("D")
+                                    : moment(scheduleSummary.endDate).format("M/D")
                                 : null}
                         </span>
                         <div
@@ -147,7 +150,7 @@ const ScheduleInput: React.FC<{
                 ) : null}
             </div>
             <div className="state-area center grid">
-                <button onClick={handleChangeState}></button>
+                <button  onClick={handleChangeState}>작업대기</button>
             </div>
             <div className="c-member-area center grid">
                 <button onClick={handleChangeCMEmber}></button>
