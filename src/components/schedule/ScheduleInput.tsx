@@ -25,10 +25,16 @@ const ScheduleInput: React.FC<{
     }>({ startDate: "", endDate: "" });
     const [isCale, setCale] = useState(false);
     const [caleIndex, setCaleIndex] = useState<number | null>(null);
+    const [selectOption, setSelectOption] = useState<any>("");
+    const stateValue: { value: string; label: string }[] = [
+        { value: "", label: ""},
+        { value: "wait", label: "작업대기" },
+        { value: "work", label: "작업중" },
+        { value: "complete", label: "작업완료" },
+        { value: "check", label: "확인필요" },
+    ];
 
     const handleDate = (date: Date) => {
-        // setDate(date)
-        console.log("date", date);
         if (fetchDate.startDate === "") {
             setDate({ ...fetchDate, startDate: moment(date).format("YYYY-MM-DD") });
         } else if (fetchDate.endDate === "") {
@@ -77,20 +83,33 @@ const ScheduleInput: React.FC<{
             startDate: scheduleSummary.startDate,
             endDate: scheduleSummary.endDate,
         });
-        console.log("G",scheduleSummary)
     };
 
-    const handleChangeState = () => {
-        console.log("click");
+    const handleChangeState = (e: any) => {
+        setSelectOption(e.target.value);
     };
+    const backClass = (value: string) => {
+        switch (value) {
+            case "wait":
+                return "wait-bg"
+            case "work":
+                return "work-bg"
+            case "complete":
+                return "cp-bg"
+            case "check":
+                return "check-bg"
+            default:
+                return ""
+        }
+    }
 
     const handleChangeCMEmber = () => {
         console.log("click");
     };
 
     useEffect(() => {
-        if (scheduleSummary.id) setTitle(scheduleSummary.title);
-    }, []);
+        if (scheduleSummary.id) setTitle(scheduleSummary.title); console.log("이거",scheduleSummary);
+    }, [scheduleSummary.startDate,scheduleSummary.endDate]);
     useEffect(() => {
         console.log("list", fetchDate);
         handleChangeDate()
@@ -114,7 +133,7 @@ const ScheduleInput: React.FC<{
                 />
             </div>
             <div className="date-area center grid">
-                {scheduleSummary.startDate === "" || scheduleSummary.startDate === null ? (
+                {scheduleSummary.startDate === "" ? (
                     <div
                         className="date-area-moment backColor"
                         onClick={handleClickDate}
@@ -123,7 +142,7 @@ const ScheduleInput: React.FC<{
                     </div>
                 ) : (
                     <div
-                        className="date-area-moment"
+                        className={`date-area-moment ${backClass(selectOption)}`}
                         onClick={handleClickDate}
                         role="none">
                         <span>
@@ -150,7 +169,21 @@ const ScheduleInput: React.FC<{
                 ) : null}
             </div>
             <div className="state-area center grid">
-                <button  onClick={handleChangeState}>작업대기</button>
+                <select
+                    className={`state-area-select ${backClass(selectOption)}`}
+                    value={selectOption}
+                    onChange={handleChangeState}>
+                    {stateValue.map((item, index) => {
+                        return (
+                            <option
+                                className="select-option"
+                                value={item.value}
+                                key={item.value}>
+                                {item.label}
+                            </option>
+                        );
+                    })}
+                </select>
             </div>
             <div className="c-member-area center grid">
                 <button onClick={handleChangeCMEmber}></button>
