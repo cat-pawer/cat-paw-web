@@ -26,6 +26,7 @@ export interface ChatInterface extends EventTarget {
     addScheduleSummary(scheduleId: number, title: string): void;
     updateScheduleSummary(scheduleId: number, summary: ScheduleSummary): void;
     removeScheduleSummary(scheduleId: number, removeList: Array<number>): void;
+    getCodeList(): Array<CodeInfo>;
     getGroupId(): number | undefined;
     getMemberList(): Array<MemberInfo>;
     getCurrentMemberList(): Array<OnlineMemberInfo>;
@@ -47,8 +48,8 @@ export type ScheduleSummary = {
     id: number;
     cMemberId: number;
     title: string;
-    startDate: Date | string | undefined;
-    endDate: Date | string | undefined;
+    startDate: Date | string;
+    endDate: Date | string;
     status: number;
     created: Date;
     updated: Date;
@@ -374,7 +375,9 @@ export class ChatManager extends EventTarget implements ChatInterface {
             } as MessageDto,
         } as CustomMessage);
     }
-
+    getCodeList(): Array<CodeInfo> {
+        return this._codeList;
+    }
     getGroupId(): number | undefined {
         return this._groupId;
     }
