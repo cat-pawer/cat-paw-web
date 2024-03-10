@@ -40,7 +40,7 @@ function MyPage() {
 
     const myProject = async () => {
         const res = await apiGetClient(
-            "/groups/summary?mine=true&page=0&size=5&sort=string",
+            "/groups/summary?mine=false&page=0&size=5&sort=string",
         );
         if (res) {
             if (res.status === 200) {
@@ -49,7 +49,7 @@ function MyPage() {
         }
     };
     useEffect(() => {
-        myProject().then((r) => null);
+        // myProject().then((r) => null);
     });
     return (
         <div className="my">

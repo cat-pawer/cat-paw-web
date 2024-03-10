@@ -42,6 +42,7 @@ const ScheduleInput: React.FC<{
         } else {
             setDate({ startDate: moment(date).format("YYYY-MM-DD"), endDate: "" });
         }
+
         // handleChangeDate();
     };
     const value: string | Date = fetchDate.startDate || "";
@@ -109,12 +110,12 @@ const ScheduleInput: React.FC<{
 
     useEffect(() => {
         if (scheduleSummary.id) setTitle(scheduleSummary.title); console.log("이거",scheduleSummary);
-    }, [scheduleSummary.startDate,scheduleSummary.endDate]);
+    }, []);
     useEffect(() => {
         console.log("list", fetchDate);
-        handleChangeDate()
         setCale(false);
-    }, [fetchDate]);
+        handleChangeDate()
+    }, [fetchDate,scheduleSummary.startDate,scheduleSummary.endDate]);
 
     return (
         <div className="schedule-input-wrapper">
