@@ -22,12 +22,12 @@ const ScheduleInput: React.FC<{
     const [isCale, setCale] = useState(false);
     const [caleIndex, setCaleIndex] = useState<number | null>(null);
     const [selectOption, setSelectOption] = useState<any>("");
-    const stateValue: { value: string; label: string }[] = [
-        { value: "", label: ""},
-        { value: "wait", label: "작업대기" },
-        { value: "work", label: "작업중" },
-        { value: "complete", label: "작업완료" },
-        { value: "check", label: "확인필요" },
+    const stateValue: { value: any; label: string }[] = [
+        { value: 0, label: ""},
+        { value: "1", label: "작업대기" },
+        { value: "2", label: "작업중" },
+        { value: 3, label: "작업완료" },
+        { value: 4, label: "확인필요" },
     ];
 
     const value = "";
@@ -87,16 +87,21 @@ const ScheduleInput: React.FC<{
 
     const handleChangeState = (e: any) => {
         setSelectOption(e.target.value);
+        getChatManager().updateScheduleSummary(scheduleId, {
+            ...scheduleSummary,
+            status: e.target.value
+        });
     };
+
     const backClass = (value: string) => {
         switch (value) {
-            case "wait":
+            case "1":
                 return "wait-bg"
-            case "work":
+            case "2":
                 return "work-bg"
-            case "complete":
+            case "3":
                 return "cp-bg"
-            case "check":
+            case "4":
                 return "check-bg"
             default:
                 return ""
@@ -168,7 +173,7 @@ const ScheduleInput: React.FC<{
             <div className="state-area center grid">
                 <select
                     className={`state-area-select ${backClass(selectOption)}`}
-                    value={selectOption}
+                    value={scheduleSummary.status}
                     onChange={handleChangeState}>
                     {stateValue.map((item, index) => {
                         return (

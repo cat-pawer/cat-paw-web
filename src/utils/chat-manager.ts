@@ -26,7 +26,7 @@ export interface ChatInterface extends EventTarget {
     addScheduleSummary(scheduleId: number, title: string): void;
     updateScheduleSummary(scheduleId: number, summary: ScheduleSummary): void;
     removeScheduleSummary(scheduleId: number, removeList: Array<number>): void;
-    getCodeList(): Array<CodeInfo>;
+    getCodeList(scheduleId: number, codeInfo: CodeInfo): void;
     getGroupId(): number | undefined;
     getMemberList(): Array<MemberInfo>;
     getCurrentMemberList(): Array<OnlineMemberInfo>;
