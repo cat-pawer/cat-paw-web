@@ -25,7 +25,6 @@ const ScheduleInput: React.FC<{
     const [codeList, setCodeList] = useState<CodeInfo[]>([])
     const [hostMember, setMember] = useState("")
     const stateValue: { value: any; label: string }[] = [
-        { value: 0, label: ""},
         { value: 1, label: "작업완료" },
         { value: "2", label: "작업대기" },
         { value: "3", label: "작업중" },
@@ -91,11 +90,15 @@ const ScheduleInput: React.FC<{
         setSelectOption(e.target.value);
         getChatManager().updateScheduleSummary(scheduleId, {
             ...scheduleSummary,
-            status: e.target.value
+            status: parseInt(e.target.value,10)
         });
     };
     const handleChangeMember = (e: any) => {
         setMember(e.target.value)
+        getChatManager().updateScheduleSummary(scheduleId, {
+            ...scheduleSummary,
+            cMemberId: parseInt(e.target.value,10)
+        });
     }
     const handleCodeList = (e:Event) => {
         setCodeList([...getChatManager().getCodeList()])
@@ -127,7 +130,7 @@ const ScheduleInput: React.FC<{
     }, [scheduleSummary]);
 
     useEffect(()=>{
-        console.log(codeList)
+        console.log(memberList)
         getChatManager().addEventListener(
             CHAT_EVENT.INIT_COMPLETE,
             handleCodeList,
@@ -197,7 +200,7 @@ const ScheduleInput: React.FC<{
                     className={`state-area-select ${backClass(selectOption)}`}
                     value={scheduleSummary.status}
                     onChange={handleChangeState}>
-                    <option value=""></option>
+                    <option value={""}></option>
                     {stateValue.map((item, index) => {
                         return (
                             <option
@@ -212,9 +215,10 @@ const ScheduleInput: React.FC<{
             </div>
             <div className="c-member-area center grid">
                 <select
-                    className={"c-member-area-select"}
-                    value={hostMember}
+                    className="c-member-area-select"
+                    value={scheduleSummary.cMemberId}
                     onChange={handleChangeMember}>
+                    <option value={""}></option>
                     {memberList.map((item, index) => {
                         return (
                             <option
@@ -226,7 +230,6 @@ const ScheduleInput: React.FC<{
                         );
                     })}
                 </select>
-                <button onClick={handleChangeCMEmber}></button>
             </div>
         </div>
     );

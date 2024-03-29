@@ -222,13 +222,21 @@
 
                 .c-member-area {
                     width: 152px;
-                    button {
+                    &-select{
                         cursor: pointer;
-                        width: 40px;
+                        width: 70px;
                         height: 40px;
                         background-color: #D9D9D9;
                         border-radius: 50%;
+                        outline: none;
                         border: none;
+                        appearance: none;
+                        text-align: center;
+                        .select-option{
+                            margin: 10px;
+                            background-color: white;
+                            color: black;
+                        }
                     }
                 }
             }
