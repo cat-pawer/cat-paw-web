@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
     CHAT_EVENT,
     getChatManager,
@@ -7,7 +6,6 @@ import {
     Schedule,
 } from "../../utils/chat-manager";
 import ScheduleBox from "./ScheduleBox";
-import CatPawInput from "../common/CatPawInput";
 import { MessageDto, MessageType } from "@/utils/type";
 
 const ScheduleList: React.FC = () => {

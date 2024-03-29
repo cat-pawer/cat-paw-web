@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {
+    CHAT_EVENT,
+    CodeInfo,
     getChatManager,
     MemberInfo,
     ScheduleSummary,
@@ -8,7 +9,6 @@ import {
 import CatPawInput from "../common/CatPawInput";
 import Calendar from "../common/CustomCalendar";
 import moment from "moment/moment";
-// import "../../assets/css/scheduledate.scss";
 
 const ScheduleInput: React.FC<{
     index: number;
@@ -22,11 +22,13 @@ const ScheduleInput: React.FC<{
     const [isCale, setCale] = useState(false);
     const [caleIndex, setCaleIndex] = useState<number | null>(null);
     const [selectOption, setSelectOption] = useState<any>("");
+    const [codeList, setCodeList] = useState<CodeInfo[]>([])
+    const [hostMember, setMember] = useState("")
     const stateValue: { value: any; label: string }[] = [
         { value: 0, label: ""},
-        { value: "1", label: "작업대기" },
-        { value: "2", label: "작업중" },
-        { value: 3, label: "작업완료" },
+        { value: 1, label: "작업완료" },
+        { value: "2", label: "작업대기" },
+        { value: "3", label: "작업중" },
         { value: 4, label: "확인필요" },
     ];
 
@@ -92,15 +94,21 @@ const ScheduleInput: React.FC<{
             status: e.target.value
         });
     };
+    const handleChangeMember = (e: any) => {
+        setMember(e.target.value)
+    }
+    const handleCodeList = (e:Event) => {
+        setCodeList([...getChatManager().getCodeList()])
+    }
 
     const backClass = (value: string) => {
         switch (value) {
             case "1":
-                return "wait-bg"
-            case "2":
-                return "work-bg"
-            case "3":
                 return "cp-bg"
+            case "2":
+                return "wait-bg"
+            case "3":
+                return "work-bg"
             case "4":
                 return "check-bg"
             default:
@@ -117,6 +125,20 @@ const ScheduleInput: React.FC<{
             setTitle(scheduleSummary.title);
             setCale(false);
     }, [scheduleSummary]);
+
+    useEffect(()=>{
+        console.log(codeList)
+        getChatManager().addEventListener(
+            CHAT_EVENT.INIT_COMPLETE,
+            handleCodeList,
+        );
+        return () => {
+            getChatManager().removeEventListener(
+                CHAT_EVENT.INIT_COMPLETE,
+                handleCodeList,
+            )
+        }
+    },[]);
 
     return (
         <div className="schedule-input-wrapper">
@@ -175,6 +197,7 @@ const ScheduleInput: React.FC<{
                     className={`state-area-select ${backClass(selectOption)}`}
                     value={scheduleSummary.status}
                     onChange={handleChangeState}>
+                    <option value=""></option>
                     {stateValue.map((item, index) => {
                         return (
                             <option
@@ -188,6 +211,21 @@ const ScheduleInput: React.FC<{
                 </select>
             </div>
             <div className="c-member-area center grid">
+                <select
+                    className={"c-member-area-select"}
+                    value={hostMember}
+                    onChange={handleChangeMember}>
+                    {memberList.map((item, index) => {
+                        return (
+                            <option
+                                className="select-option"
+                                value={item.memberId}
+                                key={item.memberId}>
+                                {item.memberName}
+                            </option>
+                        );
+                    })}
+                </select>
                 <button onClick={handleChangeCMEmber}></button>
             </div>
         </div>
