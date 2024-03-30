@@ -15,20 +15,20 @@ const ScheduleInput: React.FC<{
     scheduleId: number;
     scheduleSummary: ScheduleSummary;
     memberList: Array<MemberInfo>;
+    codeList: Array<CodeInfo>;
     checkboxHandler?: (id: number) => void;
-}> = ({ index, scheduleId, scheduleSummary, memberList, checkboxHandler }) => {
+}> = ({ index, scheduleId, scheduleSummary, memberList,codeList, checkboxHandler }) => {
     const [title, setTitle] = useState("");
     const [isCheck, setIsCheck] = useState(false);
     const [isCale, setCale] = useState(false);
     const [caleIndex, setCaleIndex] = useState<number | null>(null);
     const [selectOption, setSelectOption] = useState<any>("");
-    const [codeList, setCodeList] = useState<CodeInfo[]>([])
     const [hostMember, setMember] = useState("")
-    const stateValue: { value: any; label: string }[] = [
-        { value: 1, label: "작업완료" },
-        { value: "2", label: "작업대기" },
-        { value: "3", label: "작업중" },
-        { value: 4, label: "확인필요" },
+    const stateValue: { id: any; name: string }[] = [
+        { id: 1, name: "작업완료" },
+        { id: "2", name: "작업대기" },
+        { id: "3", name: "작업중" },
+        { id: 4, name: "확인필요" },
     ];
 
     const value = "";
@@ -55,9 +55,11 @@ const ScheduleInput: React.FC<{
                 title,
                 // todo
                 cMemberId: scheduleSummary.cMemberId, //여기 값들 바꿔서 호출
+                // cmemberId: scheduleSummary.cmemberId, //여기 값들 바꿔서 호출
                 startDate: scheduleSummary.startDate,
                 endDate: scheduleSummary.endDate,
                 status: scheduleSummary.status,
+                // statusCodeId: scheduleSummary.statusCodeId,
             }),
         );
     };
@@ -88,8 +90,11 @@ const ScheduleInput: React.FC<{
 
     const handleChangeState = (e: any) => {
         setSelectOption(e.target.value);
+        console.log("eee",e.target.value)
+        console.log("codelist:",codeList)
         getChatManager().updateScheduleSummary(scheduleId, {
             ...scheduleSummary,
+            statusCodeId: parseInt(e.target.value,10),
             status: parseInt(e.target.value,10)
         });
     };
@@ -97,14 +102,12 @@ const ScheduleInput: React.FC<{
         setMember(e.target.value)
         getChatManager().updateScheduleSummary(scheduleId, {
             ...scheduleSummary,
-            cMemberId: parseInt(e.target.value,10)
+            cMemberId: parseInt(e.target.value,10),
+            // cmemberId: parseInt(e.target.value,10)
         });
     }
-    const handleCodeList = (e:Event) => {
-        setCodeList([...getChatManager().getCodeList()])
-    }
 
-    const backClass = (value: string) => {
+    const backClass = (value: any) => {
         switch (value) {
             case "1":
                 return "cp-bg"
@@ -119,10 +122,6 @@ const ScheduleInput: React.FC<{
         }
     }
 
-    const handleChangeCMEmber = () => {
-        console.log("click");
-    };
-
     useEffect(() => {
         if (scheduleSummary.id)
             setTitle(scheduleSummary.title);
@@ -130,17 +129,6 @@ const ScheduleInput: React.FC<{
     }, [scheduleSummary]);
 
     useEffect(()=>{
-        console.log(memberList)
-        getChatManager().addEventListener(
-            CHAT_EVENT.INIT_COMPLETE,
-            handleCodeList,
-        );
-        return () => {
-            getChatManager().removeEventListener(
-                CHAT_EVENT.INIT_COMPLETE,
-                handleCodeList,
-            )
-        }
     },[]);
 
     return (
@@ -205,9 +193,9 @@ const ScheduleInput: React.FC<{
                         return (
                             <option
                                 className="select-option"
-                                value={item.value}
-                                key={item.value}>
-                                {item.label}
+                                value={item.id}
+                                key={item.id}>
+                                {item.name}
                             </option>
                         );
                     })}

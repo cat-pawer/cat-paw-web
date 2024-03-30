@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
-    CHAT_EVENT,
+    CHAT_EVENT, CodeInfo,
     getChatManager,
     MemberInfo,
     Schedule,
@@ -11,6 +11,7 @@ import { MessageDto, MessageType } from "@/utils/type";
 const ScheduleList: React.FC = () => {
     const [scheduleList, setScheduleList] = useState<Schedule[]>([]);
     const [memberList, setMemberList] = useState<MemberInfo[]>([]);
+    const [codeList, setCodeList] = useState<CodeInfo[]>([])
 
     const handleScheduleUpdate = (e: Event) => {
         const message = (e as CustomEvent).detail as MessageDto;
@@ -20,6 +21,7 @@ const ScheduleList: React.FC = () => {
     const handleInitComplete = (e: Event) => {
         setScheduleList([...getChatManager().getScheduleList()]);
         setMemberList([...getChatManager().getMemberList()]);
+        setCodeList([...getChatManager().getCodeList()])
     };
 
     useEffect(() => {
@@ -53,6 +55,7 @@ const ScheduleList: React.FC = () => {
                         isNew={false}
                         schedule={schedule}
                         memberList={memberList}
+                        codeList={codeList}
                         key={i + "_" + new Date().getTime()}></ScheduleBox>
                 );
             })}

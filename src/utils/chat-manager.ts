@@ -47,6 +47,8 @@ export type Schedule = {
 export type ScheduleSummary = {
     id: number;
     cMemberId: number;
+    cmemberId: number;
+    statusCodeId: number;
     title: string;
     startDate: Date | string;
     endDate: Date | string;
@@ -340,6 +342,8 @@ export class ChatManager extends EventTarget implements ChatInterface {
         scheduleId: number,
         summary: {
             cMemberId: number;
+            // cmemberId: number;
+            // statusCodeId: number;
             updatedBy: string;
             endDate: Date | string | undefined;
             createdBy: string;

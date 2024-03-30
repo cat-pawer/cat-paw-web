@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-    CHAT_EVENT,
+    CHAT_EVENT, CodeInfo,
     getChatManager,
     MemberInfo,
     Schedule,
@@ -13,7 +13,8 @@ const ScheduleBox: React.FC<{
     isNew: boolean;
     schedule?: Schedule;
     memberList?: Array<MemberInfo>;
-}> = ({ isNew, schedule, memberList }) => {
+    codeList?: Array<CodeInfo>;
+}> = ({ isNew, schedule, memberList,codeList }) => {
     const [scheduleTitle, setScheduleTitle] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [removeList, setRemoveList] = useState<Array<number>>([]);
@@ -144,6 +145,7 @@ const ScheduleBox: React.FC<{
                                       scheduleId={schedule.id}
                                       scheduleSummary={summary}
                                       checkboxHandler={handleCheckbox}
+                                      codeList={codeList ?? []}
                                       memberList={
                                           memberList ?? []
                                       }></ScheduleInput>
